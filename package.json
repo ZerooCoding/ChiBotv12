@@ -44,6 +44,7 @@
     "simple-youtube-api": "^5.2.1",
     "sqlite3": "^5.0.0",
     "string-similarity": "^4.0.1",
+    "text-chart": "^1.0.8",
     "tiny-text": "^1.0.1",
     "walk": "^2.3.14",
     "youtube-dl": "^3.0.2",

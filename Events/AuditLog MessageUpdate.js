@@ -8,6 +8,7 @@ bot.on('messageUpdate', async (oldMessage, newMessage) => {
     if (!modLogChannel) return;
     const guildConf = await bot.settings.ensure(oldMessage.guild.id, defaultSettings);
     if (guildConf.shouldLog === 'false') return;
+    if (oldMessage.member.id === bot.user.id) return;
     if (newMessage.channel.type == "text" && newMessage.cleanContent != oldMessage.cleanContent) {
 
         const LogEmbed = new Discord.MessageEmbed()

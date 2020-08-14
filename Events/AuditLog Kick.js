@@ -17,7 +17,7 @@ bot.on('guildMemberRemove', async member => {
         leftuser = entry.target.tag
         kicker = `Kicked by ${entry.executor.tag}`
     } else {
-        leftuser = member.user.tag
+        leftuser = `${member.displayName ? member.displayName : ''} | ${member.user.tag}`
         kicker = "Left on their own"
     }
 

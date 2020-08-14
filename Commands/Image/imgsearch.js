@@ -53,7 +53,11 @@ module.exports = {
                     reaction.users.remove(user).catch(console.error);
                     if (message.author.id !== user.id) return;
                     try {
-                        imgMessage.delete({ timeout: 1 * 1000 })
+                        imgMessage.reactions.removeAll();
+                        Image.setFooter("Collection Deleted - Removing in 30s...");
+                        Image.setImage();
+                        imgMessage.edit({ embed: Image }).then(s => s.delete({ timeout: 30 * 1000 }));
+                        message.delete({ timeout: 1 * 1000 });
                     } catch (error) {
                         console.error(error);
                     };
@@ -96,6 +100,7 @@ module.exports = {
                         Image.setFooter("Collection Ended");
                         imgMessage.edit({ embed: Image });
                         collector.stop({ reason: "User Input" });
+                        message.delete({ timeout: 1 * 1000 })
                     } catch (err) {
                         console.log(err);
                     };

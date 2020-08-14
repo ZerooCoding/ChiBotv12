@@ -8,6 +8,7 @@ bot.on('messageDelete', async message => {
     if (!modLogChannel) return;
     const guildConf = await bot.settings.ensure(message.guild.id, defaultSettings);
     if (guildConf.shouldLog === 'false') return;
+    if (message.member.id === bot.user.id) return;
 
     const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first());
 

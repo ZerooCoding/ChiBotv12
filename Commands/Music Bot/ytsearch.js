@@ -64,8 +64,12 @@ module.exports = {
                     reaction.users.remove(user).catch(console.error);
                     if (message.author.id !== user.id) return;
                     try {
-                        vidMessage.delete({ timeout: 1 * 1000 });
+                        VidEmbed.setFooter("Collection Deleted - Removing in 30s...");
+                        VidEmbed.setImage();
+                        vidMessage.edit({ embed: VidEmbed }).then(s => s.delete({ timeout: 30 * 1000 }));
+                        vidMessage.reactions.removeAll();
                         urlMessage.delete({ timeout: 1 * 1000 });
+                        message.delete({ timeout: 1 * 1000 });
                     } catch (error) {
                         console.error(error);
                     };
@@ -108,6 +112,7 @@ module.exports = {
                         VidEmbed.setFooter("Collection Ended");
                         vidMessage.edit({ embed: VidEmbed });
                         collector.stop({ reason: "User Input" });
+                        message.delete({ timeout: 1 * 1000 })
                     } catch (err) {
                         console.log(err);
                     };
