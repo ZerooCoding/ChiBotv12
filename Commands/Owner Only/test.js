@@ -11,10 +11,7 @@ module.exports = {
     cooldown: "",
     aliases: [],
     run: async (bot, message, args, guildConf) => {
-
-        const barChart = new BarChart();
-        barChart.setData([["apples", 15], ["oranges", 3], ["bananas", 12]]);
-        message.channel.send(barChart.render())
+        if (message.author.id !== "101789503634554880") return;
 
     }
 };

@@ -13,7 +13,7 @@ module.exports = {
   usage: "<@user> <reason>",
   cooldown: "2",
   aliases: [],
-  run: async (bot, message, args, guildWarn) => {
+  run: async (bot, message, args, guildConf) => {
 
     message.delete();
 

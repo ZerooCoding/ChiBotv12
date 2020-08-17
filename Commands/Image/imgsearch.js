@@ -14,11 +14,17 @@ module.exports = {
         let Images;
         let ImgLength;
         let ImgNum = 0;
+        let query = args.join(" ");
         const Image = new Discord.MessageEmbed();
-        await client.search(args.join(" "), options).then(images => {
+        await client.search(query, options).then(images => {
             Images = images;
             ImgLength = images.length;
         });
+
+        if (!Images[0]) return message.reply(`Request timed out or no results found for \`${query}\`.`).then(s => {
+            s.delete({ timeout: 20 * 1000 })
+            message.delete({ timeout: 30 * 1000 })
+        })
 
         try {
 

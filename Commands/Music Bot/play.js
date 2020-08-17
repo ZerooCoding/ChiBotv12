@@ -28,7 +28,7 @@ module.exports = {
 
         if (!args.length)
             return message
-                .reply(`Usage: ${bot.prefix}play <YouTube URL | Video Name>`)
+                .reply(`Usage: ${guildConf.prefix}play <YouTube URL | Video Name>`)
                 .catch(console.error);
 
         const permissions = channel.permissionsFor(bot.user);
