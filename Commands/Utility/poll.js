@@ -65,6 +65,8 @@ module.exports = {
 
             await message.delete({ timeout: 500 });
 
+            if (!msgs.length) return message.reply("No poll options provided. Command cancelled.").then(s => s.delete({ timeout: 20 * 1000 }));
+
             for (var i = 0; i < msgs.length; i++) {
                 final.push(`${EmojiOptions[i]} ${msgs[i]}`)
             }
@@ -103,6 +105,7 @@ module.exports = {
 
                 switch (reaction.emoji.name) {
                     case EmojiOptions[0]:
+                        if (!msgs[0]) return reaction.users.remove(user).catch(console.error);
                         e1 = "■".repeat(reaction.count - 1);
                         embed.setDescription(`${title ? `__${title}__` : '__Poll Started__'}
                 
@@ -122,6 +125,7 @@ module.exports = {
                         break;
 
                     case EmojiOptions[1]:
+                        if (!msgs[1]) return reaction.users.remove(user).catch(console.error);
                         e2 = "■".repeat(reaction.count - 1);
                         embed.setDescription(`${title ? `__${title}__` : '__Poll Started__'}
                 
@@ -141,6 +145,7 @@ module.exports = {
                         break;
 
                     case EmojiOptions[2]:
+                        if (!msgs[2]) return reaction.users.remove(user).catch(console.error);
                         e3 = "■".repeat(reaction.count - 1);
                         embed.setDescription(`${title ? `__${title}__` : '__Poll Started__'}
                 
@@ -160,6 +165,7 @@ module.exports = {
                         break;
 
                     case EmojiOptions[3]:
+                        if (!msgs[3]) return reaction.users.remove(user).catch(console.error);
                         e4 = "■".repeat(reaction.count - 1);
                         embed.setDescription(`${title ? `__${title}__` : '__Poll Started__'}
                 
@@ -179,6 +185,7 @@ module.exports = {
                         break;
 
                     case EmojiOptions[4]:
+                        if (!msgs[4]) return reaction.users.remove(user).catch(console.error);
                         e5 = "■".repeat(reaction.count - 1);
                         embed.setDescription(`${title ? `__${title}__` : '__Poll Started__'}
                 
@@ -198,6 +205,7 @@ module.exports = {
                         break;
 
                     case EmojiOptions[5]:
+                        if (!msgs[5]) return reaction.users.remove(user).catch(console.error);
                         e6 = "■".repeat(reaction.count - 1);
                         embed.setDescription(`${title ? `__${title}__` : '__Poll Started__'}
                 
@@ -217,6 +225,7 @@ module.exports = {
                         break;
 
                     case EmojiOptions[6]:
+                        if (!msgs[6]) return reaction.users.remove(user).catch(console.error);
                         e7 = "■".repeat(reaction.count - 1);
                         embed.setDescription(`${title ? `__${title}__` : '__Poll Started__'}
                 
@@ -236,6 +245,7 @@ module.exports = {
                         break;
 
                     case EmojiOptions[7]:
+                        if (!msgs[7]) return reaction.users.remove(user).catch(console.error);
                         e8 = "■".repeat(reaction.count - 1);
                         embed.setDescription(`${title ? `__${title}__` : '__Poll Started__'}
                 

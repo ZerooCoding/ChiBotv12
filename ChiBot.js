@@ -70,6 +70,9 @@ bot.on('message', async message => {
         const guildConf = bot.settings.ensure(message.guild.id, defaultSettings);
         const prefixMention = new RegExp(`^<@!?${bot.user.id}> `);
         const prefix = message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : guildConf.prefix;
+        let matches = [];
+        let string = '';
+        let target;
 
         if (message.channel.type === 'dm') return;
         if (!message.content.startsWith(prefix)) return;
@@ -84,7 +87,17 @@ bot.on('message', async message => {
             let PossibleCMDs = bot.commands.map(n => { return n.name })
             if (!PossibleCMDs) PossibleCMDs = bot.aliases.map(n => { return n.name })
             let matchname = similar.findBestMatch(cmd, PossibleCMDs);
-            return message.channel.send(`Invalid Command, Did you mean \`${matchname.bestMatch.target}\`?`).then(s => s.delete({ timeout: 10 * 1000 }));
+            matchname.ratings.forEach(f => {
+                if (f.rating > 0.2) {
+                    matches.push({ name: f.target, rating: f.rating });
+                    target = matches.map(m => `\`${Math.round(m.rating * 10) / 10}\` | ${m.name}`).join("\n");
+                    string = `\nInvalid Command, Did you mean: \n${target}?`;
+                }
+            })
+            if (!matches.length) {
+                string = `\nNo commands similar to \`${cmd}\` found, Try the \`${guildConf.prefix}help\` command instead!`;
+            }
+            return message.reply(string).then(s => s.delete({ timeout: 30 * 1000 }));
         }
 
         if (!cooldowns.has(command.name)) { cooldowns.set(command.name, new Discord.Collection()); }
