@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const similar = require("string-similarity");
 const ms = require("ms");
 const config = require("../../DataStore/Config/config.json");
-const timeouttime = ms("15s");
+const timeouttime = ms("60s");
 
 module.exports = {
     name: "removerole",
