@@ -75,7 +75,9 @@ bot.on('message', async message => {
     try {
         if (command) {
             if (message.guild.me.hasPermission("MANAGE_MESSAGES")) {
-                message.delete({ timeout: 60 * 1000 });
+                if (message) {
+                    message.delete({ timeout: 60 * 1000 });
+                }
             }
             command.execute(bot, message, args, settings);
         }
