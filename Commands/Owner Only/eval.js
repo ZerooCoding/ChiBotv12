@@ -5,12 +5,8 @@ module.exports = {
     aliases: [],
     description: "Evaluate Code",
     category: "Owner Only",
-    usage: "",
     ownerOnly: true,
     args: true,
-    hidden: false,
-    userPerms: [],
-    botPerms: [],
     async execute(bot, message, args, settings) {
         function clean(text) {
             if (typeof text === "string") {

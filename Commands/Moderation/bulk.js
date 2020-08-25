@@ -4,9 +4,6 @@ module.exports = {
     description: "Bulk Delete messages.",
     category: "Moderation",
     usage: "<count> | <count> <@user>",
-    ownerOnly: false,
-    hidden: false,
-    nsfw: false,
     userPerms: ["MANAGE_MESSAGES"],
     botPerms: ["MANAGE_MESSAGES"],
     async execute(bot, message, args, settings) {

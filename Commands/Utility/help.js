@@ -7,10 +7,6 @@ module.exports = {
     aliases: ["h"],
     description: "Display list of Commands",
     category: "Utility",
-    usage: "",
-    hidden: false,
-    userPerms: [],
-    botPerms: [],
     async execute(bot, message, args, settings) {
         //Init
         const cmd = args[0];
@@ -38,6 +34,7 @@ module.exports = {
             **Usage›** ${command.usage ? `${settings.prefix}${command.name} ${command.usage}` : `${settings.prefix}${command.name}`}
             **Cooldown›** ${command.cooldown ? ms(command.cooldown * 1000) : ms(2 * 1000)}
             **Description›** ${escapeMarkdown(command.description)}
+            **Example›** ${escapeMarkdown(command.example ? `${settings.prefix}${command.name} ${command.example}` : "None Provided.")}
             `)
             message.channel.send({ embed: helpEmbed });
         } else {
@@ -57,7 +54,7 @@ module.exports = {
                 });
                 const capitalize = Cat.slice(0, 1).toUpperCase() + Cat.slice(1);
                 try {
-                    helpEmbed.addField(`${capitalize} [${dir.size}] ›`, dir.map(command => `${command.name}${command.nsfw ? "😳" : ""}${command.ownerOnly ? "🔒" : ""}: ${command.description ? command.description : ""}`).join("\n"));
+                    helpEmbed.addField(`${capitalize} [${dir.size}] ›`, dir.map(command => `**${command.name}**${command.nsfw ? "😳" : ""}${command.ownerOnly ? "🔒" : ""} › ${command.description ? command.description : ""}`).join("\n"));
                 } catch (e) {
                     console.log(e);
                 }

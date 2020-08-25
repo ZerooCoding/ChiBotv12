@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
-const { Token, DefaultPrefix } = require("./DataStore/Config/Config.json");
-const fs = require("fs");
+const { Token } = require("./DataStore/Config/Config.json");
+const { GiveawaysManager } = require("discord-giveaways");
 
 const lib = require("./Core/EventLoader.js");
 const bot = new Discord.Client();
@@ -18,9 +18,20 @@ bot.mongoose = require("./database/mongoose");
 bot.defaults = require("./database/databaseDefaults");
 require("./database/functions")(bot)
 
-//Temp Info
-bot.Prefix = DefaultPrefix;
+//Declare myself as Owner of bot.
 bot.Owner = "101789503634554880";
+
+//Raffle Manager
+bot.Raffle = new GiveawaysManager(bot, {
+    storage: "./giveaways.json",
+    updateCountdownEvery: 10000,
+    default: {
+        botsCanWin: false,
+        embedColor: "#51db8f",
+        embedColorEnd: "#4ee32d",
+        reaction: "🎉"
+    }
+});
 
 ['Command Loader'].forEach(handler => {
     require(`./Events/${handler}`)(bot);
