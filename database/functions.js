@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 const { Guild } = require("./models");
 
 module.exports = bot => {
@@ -35,4 +36,9 @@ module.exports = bot => {
             return text;
         }
     };
+
+    bot.Timestamp = date => {
+        moment(date).format("MMMM Do YYYY, h:mm a");
+    };
+
 };

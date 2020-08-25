@@ -9,6 +9,10 @@ const guildSchema = mongoose.Schema({
         type: String,
         default: defaults.prefix
     },
+    welcomeMessage: {
+        type: String,
+        default: defaults.welcomeMessage
+    },
     color: {
         type: String,
         default: defaults.color
@@ -60,7 +64,7 @@ const guildSchema = mongoose.Schema({
     pinboardChannel: {
         type: String,
         default: defaults.pinboardChannel
-    },
+    }
 });
 
 module.exports = mongoose.model("Guild", guildSchema);

@@ -11,7 +11,7 @@ module.exports = {
     hidden: false,
     userPerms: [],
     botPerms: [],
-    async execute(bot, message, args) {
+    async execute(bot, message, args, settings) {
         function clean(text) {
             if (typeof text === "string") {
                 return text
