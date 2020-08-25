@@ -16,7 +16,6 @@ bot.on("guildMemberRemove", async member => {
 
     //audit Leave
     if (auditChan && settings.shouldLog) {
-        console.log("bop");
         try {
             //Setup Embed
             embed.setDescription(`<@${member.id}> left the server.`);
