@@ -34,7 +34,7 @@ bot.on("messageDelete", async message => {
         .setDescription(`**Message Deleted In›** <#${message.channel.id}>`)
         .addFields(
             { name: 'Deleted By›', value: `${user}` },
-            { name: 'Deleted Message›', value: `${message.cleanContent}` },
+            { name: 'Deleted Message›', value: `${message.cleanContent ? message.cleanContent : message.embed.description}` },
             { name: 'Additional Information›', value: `**Author-ID›** ${message.member.id}\n**Channel-ID›** ${message.channel.id}\n**Message-ID›** ${message.id}` }
         )
         .setFooter(bot.Timestamp(new Date()));

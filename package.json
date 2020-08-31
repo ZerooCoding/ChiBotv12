@@ -14,6 +14,7 @@
     "discord.js": "^12.3.1",
     "i": "^0.3.6",
     "moment": "^2.27.0",
+    "moment-duration-format": "^2.3.2",
     "mongoose": "^5.10.0",
     "ms": "^2.1.2",
     "node-opus": "^0.3.3",
