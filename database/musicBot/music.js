@@ -8,7 +8,7 @@ module.exports = {
         if (!song) {
             queue.channel.leave();
             bot.queue.delete(message.guild.id);
-            return queue.textChannel.send("🚫 Music queue ended.").then(s => s.delete({ timeout: 1 * 60000 })).catch(console.error);
+            return queue.textChannel.send("🚫 Music queue ended.").then(s => s.delete({ timeout: 30 * 1000 }));
         }
 
         let stream = null;
@@ -24,7 +24,7 @@ module.exports = {
             }
 
             console.error(error);
-            return message.channel.send(`Error: ${error.message ? error.message : error}`);
+            return message.channel.send(`Error: ${error.message ? error.message : error}`).then(s => s.delete({ timeout: 30 * 1000 }));
         }
 
         queue.connection.on("disconnect", () => bot.queue.delete(message.guild.id));
@@ -55,7 +55,7 @@ module.exports = {
         dispatcher.setVolumeLogarithmic(queue.volume / 100);
 
         try {
-            var playingMessage = await queue.textChannel.send(`🎶 Started playing: **${song.title}**\n${song.url}`);
+            var playingMessage = await queue.textChannel.send(`🎶 Started playing: **${song.title}**\n${song.url}`).then(s => s.delete({ timeout: 30 * 1000 }));
             await playingMessage.react("⏭");
             await playingMessage.react("⏯");
             await playingMessage.react("🔁");
@@ -79,7 +79,7 @@ module.exports = {
                     reaction.users.remove(user).catch(console.error);
 
                     queue.connection.dispatcher.end();
-                    queue.textChannel.send(`${user} ⏩ skipped the song`).then(s => s.delete({ timeout: 30 * 1000 })).catch(console.error);
+                    queue.textChannel.send(`${user} ⏩ skipped the song`).then(s => s.delete({ timeout: 30 * 1000 }));
                     collector.stop();
                     break;
 
@@ -89,11 +89,11 @@ module.exports = {
                     if (queue.playing) {
                         queue.playing = !queue.playing;
                         queue.connection.dispatcher.pause(true);
-                        queue.textChannel.send(`${user} ⏸ paused the music.`).then(s => s.delete({ timeout: 30 * 1000 })).catch(console.error);
+                        queue.textChannel.send(`${user} ⏸ paused the music.`).then(s => s.delete({ timeout: 30 * 1000 }));
                     } else {
                         queue.playing = !queue.playing;
                         queue.connection.dispatcher.resume();
-                        queue.textChannel.send(`${user} ▶ resumed the music!`).then(s => s.delete({ timeout: 30 * 1000 })).catch(console.error);
+                        queue.textChannel.send(`${user} ▶ resumed the music!`).then(s => s.delete({ timeout: 30 * 1000 }));
                     }
                     break;
 
@@ -101,14 +101,14 @@ module.exports = {
                     reaction.users.remove(user).catch(console.error);
 
                     queue.loop = !queue.loop;
-                    queue.textChannel.send(`Loop is now ${queue.loop ? "**on**" : "**off**"}`).then(s => s.delete({ timeout: 30 * 1000 })).catch(console.error);
+                    queue.textChannel.send(`Loop is now ${queue.loop ? "**on**" : "**off**"}`).then(s => s.delete({ timeout: 30 * 1000 }));
                     break;
 
                 case "⏹":
                     reaction.users.remove(user).catch(console.error);
 
                     queue.songs = [];
-                    queue.textChannel.send(`${user} ⏹ stopped the music!`).then(s => s.delete({ timeout: 30 * 1000 })).catch(console.error);
+                    queue.textChannel.send(`${user} ⏹ stopped the music!`).then(s => s.delete({ timeout: 30 * 1000 }));
                     try {
                         queue.connection.dispatcher.end();
                     } catch (error) {
@@ -127,7 +127,7 @@ module.exports = {
         collector.on("end", () => {
             playingMessage.reactions.removeAll().catch(console.error);
             if (!playingMessage.deleted) {
-                playingMessage.delete({ timeout: 3000 }).catch(console.error);
+                playingMessage.then(s => s.delete({ timeout: 30 * 1000 }));
             }
         });
     }
