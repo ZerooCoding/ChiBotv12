@@ -1,0 +1,124 @@
+const Discord = module.require("discord.js");
+const config = require("../../DataStore/Config/Config.json");
+const ytdl = require('ytdl-core');
+const YoutubeAPI = require("simple-youtube-api");
+const youtube = new YoutubeAPI(config.YoutubeAPI)
+
+module.exports = {
+    name: "yt",
+    description: "Search youtube.",
+    category: "Music",
+    usage: "<search query>",
+    async execute(bot, message, args, settings) {
+
+        let Vidnum = 0;
+
+        const search = args.join(" ");
+        const videoPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
+        const url = args[0];
+        const urlValid = videoPattern.test(args[0]);
+        const results = await youtube.searchVideos(search, 10);
+        let VidLength = results.length;
+
+        let songInfo = await ytdl.getInfo(results[Vidnum].url);
+        let songURL = songInfo.videoDetails.video_url;
+
+        const VidEmbed = new Discord.MessageEmbed();
+
+        try {
+
+            VidEmbed.setDescription(`**Searched by ›** ${message.member.displayName}\n**Search Query ›** ${args.join(" ")}`);
+            VidEmbed.setColor(bot.Color);
+            VidEmbed.setFooter(`Video ${Vidnum + 1}/${VidLength}`);
+
+            var vidMessage = await message.channel.send({ embed: VidEmbed });
+            var urlMessage = await message.channel.send(songURL);
+
+            await vidMessage.react('🗑️');
+            await vidMessage.react('◀️');
+            await vidMessage.react('▶️');
+            await vidMessage.react('✅');
+
+        } catch (e) {
+
+            console.log(e);
+
+        }
+
+        const filter = (reaction, user) => user.id !== bot.user.id;
+        var collector = vidMessage.createReactionCollector(filter, {
+            time: 300 * 1000
+        });
+
+        collector.on("collect", async (reaction, user) => {
+            if (!vidMessage) return;
+
+            songInfo = await ytdl.getInfo(results[Vidnum].url);
+            songURL = songInfo.videoDetails.video_url;
+
+            switch (reaction.emoji.name) {
+                case "🗑️":
+                    reaction.users.remove(user).catch(console.error);
+                    if (message.author.id !== user.id) return;
+                    try {
+                        VidEmbed.setFooter("Collection Deleted - Removing in 30s...");
+                        VidEmbed.setImage();
+                        vidMessage.edit({ embed: VidEmbed }).then(s => s.delete({ timeout: 30 * 1000 }));
+                        vidMessage.reactions.removeAll();
+                        urlMessage.delete({ timeout: 1 * 1000 });
+                        message.delete({ timeout: 1 * 1000 });
+                    } catch (error) {
+                        console.error(error);
+                    };
+                    break;
+
+                case "◀️":
+                    reaction.users.remove(user).catch(console.error);
+                    if (message.author.id !== user.id) return;
+                    try {
+                        if (Vidnum !== 0) {
+                            Vidnum--;
+                            VidEmbed.setFooter(`Video ${Vidnum + 1}/${VidLength}`);
+                            vidMessage.edit({ embed: VidEmbed });
+                            urlMessage.edit(songURL);
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    };
+                    break;
+
+                case "▶️":
+                    reaction.users.remove(user).catch(console.error);
+                    if (message.author.id !== user.id) return;
+                    try {
+                        if (Vidnum <= 8) {
+                            Vidnum++;
+                            VidEmbed.setFooter(`Video ${Vidnum + 1}/${VidLength}`);
+                            vidMessage.edit({ embed: VidEmbed });
+                            urlMessage.edit(songURL);
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    };
+                    break;
+
+                case "✅":
+                    if (message.author.id !== user.id) return;
+                    vidMessage.reactions.removeAll();
+                    try {
+                        VidEmbed.setFooter("Collection Ended");
+                        vidMessage.edit({ embed: VidEmbed });
+                        collector.stop({ reason: "User Input" });
+                        message.delete({ timeout: 1 * 1000 })
+                    } catch (err) {
+                        console.log(err);
+                    };
+                    break;
+
+                default:
+                    reaction.users.remove(user).catch(console.error);
+                    break;
+            }
+        })
+    }
+};

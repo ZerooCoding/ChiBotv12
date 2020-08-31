@@ -61,6 +61,10 @@ const guildSchema = mongoose.Schema({
         type: String,
         default: defaults.roleAssignChannel
     },
+    streamNotifChannel: {
+        type: String,
+        default: defaults.streamNotifChannel
+    },
     pinboardChannel: {
         type: String,
         default: defaults.pinboardChannel

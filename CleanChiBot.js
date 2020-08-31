@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const { Token } = require("./DataStore/Config/Config.json");
 const { GiveawaysManager } = require("discord-giveaways");
+const ascii = require("ascii-table");
+const table = new ascii().setHeading('Servers', 'Connection Status');
 
 const lib = require("./Core/EventLoader.js");
 const bot = new Discord.Client();
@@ -12,6 +14,9 @@ module.exports = { bot: bot };
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 bot.cooldowns = new Discord.Collection();
+
+//MusicBot
+bot.queue = new Map();
 
 //Database
 bot.mongoose = require("./database/mongoose");
@@ -38,7 +43,10 @@ bot.Raffle = new GiveawaysManager(bot, {
 });
 
 bot.once("ready", () => {
-    console.log(`${bot.user.tag} Online and Ready in ${bot.guilds.cache.size} guilds.`);
+    bot.guilds.cache.forEach((f) => {
+        table.addRow(`${f.name}`, '✔ -> Connected');
+    });
+    console.log(table.toString());
 });
 
 bot.mongoose.init();

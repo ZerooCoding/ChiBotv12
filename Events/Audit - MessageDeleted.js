@@ -1,4 +1,4 @@
-const { bot } = require("../ChiBot");
+const { bot } = require("../CleanChiBot");
 const { MessageEmbed } = require("discord.js");
 
 bot.on("messageDelete", async message => {
@@ -15,13 +15,15 @@ bot.on("messageDelete", async message => {
     const entry = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' }).then(audit => audit.entries.first());
 
     let user = ""
-    if (entry.extra.channel.id === message.channel.id
-        && (entry.target.id === message.author.id)
-        && (entry.createdTimestamp > (Date.now() - 5000))
-        && (entry.extra.count >= 1)) {
-        user = entry.executor.tag
-    } else {
-        user = message.author.tag
+    if (entry.extra) {
+        if (entry.extra.channel.id === message.channel.id
+            && (entry.target.id === message.author.id)
+            && (entry.createdTimestamp > (Date.now() - 5000))
+            && (entry.extra.count >= 1)) {
+            user = entry.executor.tag
+        } else {
+            user = message.author.tag
+        }
     }
 
 

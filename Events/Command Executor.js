@@ -1,4 +1,4 @@
-const { bot } = require("../ChiBot");
+const { bot } = require("../CleanChiBot");
 const ms = require("ms");
 const { DefaultPrefix } = require("../DataStore/Config/Config.json");
 const { Collection } = require("discord.js");

@@ -1,4 +1,4 @@
-const { bot } = require("../ChiBot");
+const { bot } = require("../CleanChiBot");
 bot.on("guildCreate", async guild => {
     console.log(`${guild.name} joined | Test`);
     try {

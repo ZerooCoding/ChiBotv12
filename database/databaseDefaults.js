@@ -15,7 +15,7 @@ module.exports = {
         rulesChannel: "Not Set, Please mention Channel or set Channel ID",
         auditLogChannel: "Not Set, Please mention Channel or set Channel ID",
         roleAssignChannel: "Not Set, Please mention Channel or set Channel ID",
+        streamNotifChannel: "Not Set, Please mention Channel or set Channel ID",
         pinboardChannel: "Not Set, Please mention Channel or set Channel ID",
-        musicQueue: []
     }
 };

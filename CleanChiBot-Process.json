@@ -1,0 +1,14 @@
+{
+    "script": "CleanChiBot.js",
+    "watch": [
+        "CleanChiBot.js",
+        "Commands/",
+        "Events/"
+    ],
+    "ignore_watch": [
+        "/home/bots/CleanChiBot/Commands/Streaming/channels.json"
+    ],
+    "watch_options": {
+        "followSymlinks": false
+    }
+}

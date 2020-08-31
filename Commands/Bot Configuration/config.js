@@ -195,6 +195,20 @@ module.exports = {
                 }
                 break;
             }
+            //streamNotifChannel
+            case "streamNotifChannel": {
+                if (!newSetting) return message.reply(`\nstreamNotifChannel: \`${settings.streamNotifChannel}\``).then(s => s.delete({ timeout: 60 * 1000 }));
+                try {
+
+                    let channel = message.mentions.channels.first();
+
+                    await bot.updateGuild(message.guild, { streamNotifChannel: `${channel.id ? channel.id : newSetting}` });
+                    message.reply(`\nSetting Updated: streamNotifChannel: ${channel.id ? channel : newSetting}`).then(s => s.delete({ timeout: 60 * 1000 }));
+                } catch (error) {
+                    message.reply(`\nAn error occurred: **${error.message}**`).then(s => s.delete({ timeout: 60 * 1000 }));
+                }
+                break;
+            }
             //pinboardChannel
             case "pinboardChannel": {
                 if (!newSetting) return message.reply(`\npinboardChannel: \`${settings.pinboardChannel}\``).then(s => s.delete({ timeout: 60 * 1000 }));
@@ -241,6 +255,7 @@ module.exports = {
                     **rulesChannel›** ${!isNaN(settings.rulesChannel) ? message.guild.channels.cache.get(settings.rulesChannel) : "Not Set, Please mention Channel or set Channel ID."}
                     **auditLogChannel›** ${!isNaN(settings.auditLogChannel) ? message.guild.channels.cache.get(settings.auditLogChannel) : "Not Set, Please mention Channel or set Channel ID."}
                     **roleAssignChannel›** ${!isNaN(settings.roleAssignChannel) ? message.guild.channels.cache.get(settings.roleAssignChannel) : "Not Set, Please mention Channel or set Channel ID."}
+                    **streamNotifChannel›** ${!isNaN(settings.streamNotifChannel) ? message.guild.channels.cache.get(settings.streamNotifChannel) : "Not Set, Please mention Channel or set Channel ID."}
                     **pinboardChannel›** ${!isNaN(settings.pinboardChannel) ? message.guild.channels.cache.get(settings.pinboardChannel) : "Not Set, Please mention Channel or set Channel ID."}
                     `);
                     message.channel.send({ embed: list }).then(s => s.delete({ timeout: 60 * 1000 }));

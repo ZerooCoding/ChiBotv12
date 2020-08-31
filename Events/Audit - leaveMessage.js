@@ -1,4 +1,4 @@
-const { bot } = require("../ChiBot");
+const { bot } = require("../CleanChiBot");
 const { MessageEmbed } = require("discord.js");
 
 bot.on("guildMemberRemove", async member => {
