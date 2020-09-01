@@ -1,3 +1,5 @@
 DataStore/Config/Config.json
 node_modules
 commandTemplate
+DataStore/Warnings/Warnings.json
+Commands/Streaming/channels.json
