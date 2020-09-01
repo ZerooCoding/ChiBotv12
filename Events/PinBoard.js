@@ -1,13 +1,13 @@
 const { bot } = require("../CleanChiBot");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, escapeMarkdown } = require("discord.js");
 
 const ReactLimit = 3;
 // Add
 
 bot.on("messageReactionAdd", async function (reaction, user) {
     if (user === bot.user) return;
-    const settings = await bot.getGuild(user.guild);
     const message = reaction.message;
+    const settings = await bot.getGuild(message.guild);
     if (reaction.emoji.name !== "📌") return;
     const starChannel = await message.guild.channels.cache.get(settings.pinboardChannel)
     if (!starChannel) return message.channel.send("Cannot find the channel pinboard, does it exist?").then(s => { s.delete({ timeout: "10000" }); });
@@ -25,34 +25,27 @@ bot.on("messageReactionAdd", async function (reaction, user) {
         );
         const foundStar = stars.embeds[0];
         const image = message.attachments.size > 0 ? await extension(reaction, message.attachments.array()[0].url) : "";
-        const embed = new Discord.MessageEmbed()
-            .setColor(config.error_color)
+        const embed = new MessageEmbed()
+            .setColor(bot.Color)
             .setDescription(`
         **Channel›** ${message.channel.name}
         **Message›**
-        ${message.cleanContent}
+        ${escapeMarkdown(message.cleanContent)}
         [Jump To Message](https://discordapp.com/channels/${message.guild.id}/${message.channel.id}/${message.id}/)`)
             .setTimestamp(new Date())
             .setAuthor(`${message.author.username}`, `${message.author.avatarURL({ dynamic: true })}`)
             .setFooter(`📌 ${parseInt(star[1]) + 1} | ${message.id}`)
-            .setImage(image);
+            .setImage(message.attachments.url ? message.attachments.url : image);
 
         const starMsg = await starChannel.messages.fetch(stars.id);
-        await starMsg.edit({
-            embed
-        });
+        await starMsg.edit({ embed });
     }
 
     if (!stars && reaction.emoji.name === "📌" && reaction.count >= ReactLimit) {
         const image = message.attachments.size > 0 ? await extension(reaction, message.attachments.array()[0].url) : "";
-        if (image === "" && message.cleanContent.length < 1)
-            return message.channel
-                .send(`${user}, you cannot star an empty message.`)
-                .then(s => {
-                    s.delete({ timeout: "10000" });
-                });
-        const embed = new Discord.MessageEmbed()
-            .setColor(config.error_color)
+        if (image === "" && message.cleanContent.length < 1) return message.channel.send(`${user}, you cannot star an empty message.`).then(s => { s.delete({ timeout: "10000" }); });
+        const embed = new MessageEmbed()
+            .setColor(bot.Color)
             .setDescription(`
         **Channel›** ${message.channel.name}
         
@@ -62,10 +55,8 @@ bot.on("messageReactionAdd", async function (reaction, user) {
             .setTimestamp(new Date())
             .setAuthor(`${message.author.username}`, `${message.author.avatarURL({ dynamic: true })}`)
             .setFooter(`📌 ${reaction.count} | ${message.id}`)
-            .setImage(image);
-        await starChannel.send({
-            embed
-        });
+            .setImage(message.attachments.url ? message.attachments.url : image);
+        await starChannel.send({ embed });
     }
 
     function extension(reaction, attachment) {

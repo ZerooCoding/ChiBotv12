@@ -20,13 +20,14 @@ async function streamCheck(delay) {
     async function setEmbed(stream, chan) {
         embed = new MessageEmbed()
             .setColor("#6441a4")
-            .setTitle(`${chan.ChannelName} is now live!`)
+            .setTitle(`${(await stream.getUser()).displayName} is now live!`)
             .setDescription(`[https://www.twitch.tv/${chan.ChannelName}](https://www.twitch.tv/${chan.ChannelName})`)
             .setThumbnail((await stream.getUser()).profilePictureUrl)
             .setImage(stream.thumbnailUrl.replace("{width}", 960).replace("{height}", 540))
             .addField("Playing›", `${(await stream.getGame()).name}`, true)
             .addField("Current Viewers›", `${stream.viewers}`, true)
             .addField("Live Since›", `${bot.Timestamp(stream.startDate)}`)
+            .setFooter(`Last Updated› ${bot.Timestamp(Date.now())}`)
         return embed;
     };
 
@@ -35,21 +36,37 @@ async function streamCheck(delay) {
         const streamChan = guild.channels.cache.get(settings.streamNotifChannel);
         if (streamChan) {
             (Object.values(channels[guild.id]).map(async (chan) => {
+                let streamMsg;
                 const stream = await Twitch.helix.streams.getStreamByUserName(chan.ChannelName);
                 if (stream) {
-                    //Check if posted since 24h ago..
-                    if (await chan.LastPost > 60 * 60 * 24) return;;
 
-                    //Setup Embed Settings
-                    await setEmbed(stream, chan)
-                    streamChan.send({ embed: embed });
+                    //Check if message has been posted, if so update it.
+                    if (await !(chan.lastPost > 60 * 60 * 24) && await chan.postMessage) {
+                        let msgs = await streamChan.messages.fetch({ limit: 100 });
+                        if (msgs.get(chan.postMessage)) {
+                            const msg = await msgs.get(chan.postMessage);
+                            await setEmbed(stream, chan)
+                            msg.edit({ embed: embed });
+                        }
 
-                    //Write Database
-                    chan.LastPost = Date.now();
-                    //Write to Database
-                    writeFileSync(path.join(__dirname, "../Commands/Streaming/", "./channels.json"), JSON.stringify(channels, null, 2), function (err) {
-                        if (err) return;
-                    });
+                    } else {
+
+                        //Check if posted since 24h ago..
+                        if (await chan.LastPost > 60 * 60 * 24) return;
+
+                        //Setup Embed Settings
+                        await setEmbed(stream, chan)
+                        streamMsg = await streamChan.send({ embed: embed });
+
+                        //Write Database
+                        chan.postMessage = streamMsg.id;
+                        chan.LastPost = Date.now();
+                        //Write to Database
+                        writeFileSync(path.join(__dirname, "../Commands/Streaming/", "./channels.json"), JSON.stringify(channels, null, 2), function (err) {
+                            if (err) return;
+                        });
+
+                    }
                 }
             }));
         }

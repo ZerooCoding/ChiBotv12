@@ -1,26 +1,63 @@
 {
   "230187047674052619": {
-    "SapphSky": {
-      "ChannelName": "SapphSky",
-      "LastPost": 1598544175007
-    },
-    "Emerich": {
-      "ChannelName": "Emerich",
+    "sapphsky": {
+      "ChannelName": "sapphsky",
+      "postMessage": "",
       "LastPost": ""
     },
-    "Thatskidding": {
-      "ChannelName": "Thatskidding",
+    "emerich": {
+      "ChannelName": "emerich",
+      "postMessage": "",
       "LastPost": ""
     },
-    "CrevLM": {
-      "ChannelName": "CrevLM",
-      "LastPost": 1598576761625
+    "thatskidding": {
+      "ChannelName": "thatskidding",
+      "postMessage": "",
+      "LastPost": ""
+    },
+    "meltyyeen": {
+      "ChannelName": "meltyyeen",
+      "postMessage": "750130237450354728",
+      "LastPost": 1598915385424
+    },
+    "time2gogo": {
+      "ChannelName": "time2gogo",
+      "postMessage": "750136737711521874",
+      "LastPost": 1598916935296
+    },
+    "jerma985": {
+      "ChannelName": "jerma985",
+      "postMessage": "",
+      "LastPost": ""
     }
   },
   "417492657955405825": {
-    "Time2GoGo": {
-      "ChannelName": "Time2GoGo",
-      "LastPost": 1598567641459
+    "time2gogo": {
+      "ChannelName": "time2gogo",
+      "postMessage": "750141241223544862",
+      "LastPost": 1598918008946
+    }
+  },
+  "513574570179952650": {
+    "meltyyeen": {
+      "ChannelName": "meltyyeen",
+      "postMessage": "750141240544067596",
+      "LastPost": 1598918008913
+    },
+    "tropicvibes": {
+      "ChannelName": "tropicvibes",
+      "postMessage": "",
+      "LastPost": ""
+    },
+    "sittingintheshade": {
+      "ChannelName": "sittingintheshade",
+      "postMessage": "",
+      "LastPost": ""
+    },
+    "somaro": {
+      "ChannelName": "somaro",
+      "postMessage": "",
+      "LastPost": ""
     }
   }
 }
