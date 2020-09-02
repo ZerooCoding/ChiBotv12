@@ -30,8 +30,6 @@ bot.on('message', async message => {
     if (message.member.roles.cache.has(settings.adminRole)) return;
     if (message.member.roles.cache.has(settings.modRole)) return;
 
-    const sentence = message.content.split(/ +/g);
-
     for (let i = 0; i < profanity.length; i++) {
         let result = RegExp(profanity[i]).exec(message.cleanContent);
         if (result !== null) {
@@ -54,7 +52,7 @@ bot.on('message', async message => {
 
         await message.delete();
 
-        message.channel.send(`${message.member.displayName} Today at ${bot.Time(message.createdTimestamp)}\n${message.content.replace(badWord, "[REDACTED]")}`)
+        message.channel.send(`${message.member.displayName} Today at ${bot.Time(message.createdTimestamp)}\n${message.content.replace(badWord, "*[REDACTED]*")}`)
 
         if (!settings.shouldLog) return;
 
