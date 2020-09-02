@@ -15,7 +15,7 @@ bot.on("guildMemberAdd", async member => {
     //Setup embed
     const embed = new MessageEmbed()
         .setAuthor(member.displayName, member.user.displayAvatarURL({ dynamic: true }))
-        .setColor(bot.Color)
+        .setColor(settings.color)
         .setFooter(`At› ${bot.Timestamp(new Date())}`);
 
     //Welcome Message

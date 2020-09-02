@@ -22,7 +22,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setAuthor(message.member.displayName, message.member.user.displayAvatarURL({ dynamic: true }))
             .setDescription(`<@${toBan.id}> has been banned by ${message.member.displayName}\n**Reason›** ${banReason ? banReason : "No reason provided."}`)
-            .setColor(bot.Color);
+            .setColor(settings.color);
 
         try {
             await toBan.ban(`Banned by ${message.member.displayName} for reason: ${banReason}`)

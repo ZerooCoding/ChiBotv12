@@ -16,7 +16,7 @@ module.exports = {
         let getChans = channels[member.guild.id];
 
         const watchList = new MessageEmbed()
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setTitle(`__**${member.guild.name}'s Watched Channels**__`);
 
         Object.entries(getChans).forEach(([k, chan]) => {

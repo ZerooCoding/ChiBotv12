@@ -14,7 +14,7 @@ module.exports = {
                 .setAuthor(`${message.member.displayName}`, `${message.member.user.displayAvatarURL({ dynamic: true })}`)
                 .setDescription("*Feel The Inspiration*")
                 .setImage(body)
-                .setColor(bot.Color)
+                .setColor(settings.color)
                 .setFooter(bot.Timestamp(new Date()))
 
             message.channel.send({ embed: QuoteEmbed });

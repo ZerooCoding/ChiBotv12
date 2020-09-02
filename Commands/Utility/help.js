@@ -15,7 +15,7 @@ module.exports = {
         //Init Embed
         const helpEmbed = new MessageEmbed()
             .setAuthor(bot.user.username, bot.user.displayAvatarURL({ dynamic: true }))
-            .setColor(bot.Color);
+            .setColor(settings.color);
 
         //Command Info
         if (cmd) {

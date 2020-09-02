@@ -22,7 +22,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setAuthor(message.member.displayName, message.member.user.displayAvatarURL({ dynamic: true }))
             .setDescription(`<@${toKick.id}> has been kicked by ${message.member.displayName}\n**Reason›** ${kickReason ? kickReason : "No reason provided."}`)
-            .setColor(bot.Color);
+            .setColor(settings.color);
 
         try {
             await toKick.kick(`Kicked by ${message.member.displayName} for reason: ${kickReason}`)

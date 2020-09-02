@@ -43,7 +43,7 @@ module.exports = {
 
         //Create the Embed
         const embed = new MessageEmbed()
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setTitle(`**${message.guild.name}'s Roles**`)
             .setDescription(escapeMarkdown(Roles))
             .addField("To Assign a Role›", `${settings.prefix}role <rolename>`)

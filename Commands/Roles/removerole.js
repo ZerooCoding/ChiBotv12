@@ -20,7 +20,7 @@ module.exports = {
         //Init Embed
         const embed = new MessageEmbed()
             .setAuthor(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setFooter(`Deleting Message in 1m`);
 
         //Assume staff roles are not assignable.

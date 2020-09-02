@@ -26,7 +26,7 @@ bot.on("messageReactionAdd", async function (reaction, user) {
         const foundStar = stars.embeds[0];
         const image = message.attachments.size > 0 ? await extension(reaction, message.attachments.array()[0].url) : "";
         const embed = new MessageEmbed()
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setDescription(`
         **Channel›** ${message.channel.name}
         **Message›**
@@ -45,7 +45,7 @@ bot.on("messageReactionAdd", async function (reaction, user) {
         const image = message.attachments.size > 0 ? await extension(reaction, message.attachments.array()[0].url) : "";
         if (image === "" && message.cleanContent.length < 1) return message.channel.send(`${user}, you cannot star an empty message.`).then(s => { s.delete({ timeout: "10000" }); });
         const embed = new MessageEmbed()
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setDescription(`
         **Channel›** ${message.channel.name}
         

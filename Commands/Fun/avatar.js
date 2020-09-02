@@ -14,7 +14,7 @@ module.exports = {
             const senderembed = new MessageEmbed()
                 .setTitle(`__**Requested By: ${message.member.displayName}**__`)
                 .setImage(message.author.avatarURL({ dynamic: true, size: 1024 }))
-                .setColor(bot.Color)
+                .setColor(settings.color)
                 .setFooter(`${message.author.username}'s Avatar.`);
             return message.channel.send({ embed: senderembed });
         }
@@ -24,7 +24,7 @@ module.exports = {
         const otherembed = new MessageEmbed()
             .setTitle(`__**Requested By: ${message.member.displayName}**__`)
             .setImage(themember.avatarURL({ dynamic: true, size: 1024 }))
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setFooter(`${themember.username}'s Avatar.`);
         message.channel.send({ embed: otherembed });
     }

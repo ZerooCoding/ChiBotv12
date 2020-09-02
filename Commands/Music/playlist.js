@@ -92,7 +92,7 @@ module.exports = {
         let playlistEmbed = new Discord.MessageEmbed()
             .setTitle(`${playlist.title}`)
             .setURL(playlist.url)
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setTimestamp();
 
         playlistEmbed.setDescription(queueConstruct.songs.map((song, index) => `${index + 1}. ${song.title}`));

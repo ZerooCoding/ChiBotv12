@@ -28,7 +28,7 @@ module.exports = {
         try {
 
             VidEmbed.setDescription(`**Searched by ›** ${message.member.displayName}\n**Search Query ›** ${args.join(" ")}`);
-            VidEmbed.setColor(bot.Color);
+            VidEmbed.setColor(settings.color);
             VidEmbed.setFooter(`Video ${Vidnum + 1}/${VidLength}`);
 
             var vidMessage = await message.channel.send({ embed: VidEmbed });

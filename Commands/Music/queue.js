@@ -15,7 +15,7 @@ module.exports = {
         let queueEmbed = new MessageEmbed()
             .setTitle(`__**${message.guild.name} Music Queue**__`)
             .setDescription(description)
-            .setColor(bot.Color);
+            .setColor(settings.color);
 
         const splitDescription = splitMessage(description, {
             maxLength: 2048,

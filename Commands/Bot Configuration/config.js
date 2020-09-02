@@ -229,7 +229,7 @@ module.exports = {
                     const list = new MessageEmbed()
                         .setTitle(`__**${message.guild.name}'s Configuration**__`)
                         .setAuthor(bot.user.username, bot.user.displayAvatarURL({ dynamic: true }))
-                        .setColor(bot.Color)
+                        .setColor(settings.color)
                         .setDescription(`
 
                     **prefix›** ${settings.prefix}

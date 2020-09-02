@@ -30,7 +30,7 @@ bot.on("messageDelete", async message => {
     //Set up Embed
     const embed = new MessageEmbed()
         .setAuthor(`${message.member.displayName}`, message.author.displayAvatarURL({ dynamic: true }))
-        .setColor(bot.Color)
+        .setColor(settings.color)
         .setDescription(`**Message Deleted In›** <#${message.channel.id}>`)
         .addFields(
             { name: 'Deleted By›', value: `${user}` },

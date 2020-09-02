@@ -11,7 +11,7 @@ bot.on("guildMemberRemove", async member => {
     //Setup embed
     const embed = new MessageEmbed()
         .setAuthor(member.displayName, member.user.displayAvatarURL({ dynamic: true }))
-        .setColor(bot.Color)
+        .setColor(settings.color)
         .setFooter(`At› ${bot.Timestamp(new Date())}`);
 
     //audit Leave

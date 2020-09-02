@@ -47,7 +47,7 @@ module.exports = {
 
         const warned = new Discord.MessageEmbed()
             .setTitle("__**Warned User**__")
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setDescription(`
       **User Warned›** ${warnee.displayName}
       **Warned By›** ${message.member.displayName}
@@ -89,7 +89,7 @@ module.exports = {
         }
 
         const punish = new Discord.MessageEmbed()
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setDescription(`
       **You have received warning** #${warns[warnee.guild.id][warnee.id].warnings}
       Reason for Warning: ${lastWarning || "No Reason Provided"}

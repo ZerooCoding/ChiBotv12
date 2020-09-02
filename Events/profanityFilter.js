@@ -44,7 +44,7 @@ bot.on('message', async message => {
         const ProfaneEmbed = new MessageEmbed()
             .setTitle("__**Profanity Filter**__")
             .setThumbnail(message.author.avatarURL({ dynamic: true }))
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setDescription(`
             **${message.member.displayName} Said ›** ${badWord.join(" ")}
             **In Channel ›** ${message.channel.name}

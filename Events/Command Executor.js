@@ -9,8 +9,6 @@ bot.on('message', async message => {
     let settings;
     try {
         settings = await bot.getGuild(message.guild);
-        bot.guildSettings = settings;
-        bot.Color = settings.color;
     } catch (error) {
         console.error(error);
     }

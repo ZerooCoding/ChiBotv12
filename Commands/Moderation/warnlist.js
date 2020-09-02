@@ -16,7 +16,7 @@ module.exports = {
         let getwarns = warns[member.guild.id];
 
         const warnlist = new Discord.MessageEmbed()
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setTitle(`__**${member.guild.name}'s Warnings**__`);
 
         Object.entries(getwarns).forEach(([k, users]) => {

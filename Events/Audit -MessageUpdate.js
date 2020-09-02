@@ -16,7 +16,7 @@ bot.on("messageUpdate", async (oldMessage, newMessage) => {
         //Set up Embed
         const embed = new MessageEmbed()
             .setAuthor(`${oldMessage.member.displayName}`, oldMessage.author.displayAvatarURL({ dynamic: true }))
-            .setColor(bot.Color)
+            .setColor(settings.color)
             .setDescription(`**Message edited in›**\n<#${oldMessage.channel.id}> [Jump to Message](${oldMessage.url})`)
             .addFields(
                 { name: 'Before›', value: `${oldMessage.cleanContent}` },
