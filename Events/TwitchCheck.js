@@ -26,8 +26,19 @@ async function streamCheck(delay) {
             .addField("Playing›", `${(await stream.getGame()).name}`, true)
             .addField("Current Viewers›", `${stream.viewers}`, true)
             .addField("Live Since›", `${bot.Timestamp(stream.startDate)}`)
-            .setFooter(`Last Updated› ${bot.Timestamp(Date.now())}`)
+            .setFooter(`Last Updated› ${bot.Timestamp(Date.now())}`);
         return embed;
+    };
+
+    let offembed;
+    async function setEmbedOffline(stream, chan) {
+        offembed = new MessageEmbed()
+            .setColor("#303c42")
+            .setTitle(`${chan.ChannelName}'s stream has ended.`)
+            .setDescription(`[https://www.twitch.tv/${chan.ChannelName}](https://www.twitch.tv/${chan.ChannelName})`)
+            .setThumbnail("https://cdn.iconscout.com/icon/free/png-256/social-190-96705.png")
+            .setFooter(`As of› ${bot.Timestamp(Date.now())}`);
+        return offembed;
     };
 
     //Get the channels file
@@ -66,7 +77,7 @@ async function streamCheck(delay) {
                             //Write Database
                             chan.postMessage = postMsg.id;
                             chan.LastPost = Date.now();
-                            if (chan.Offline = true) { chan.Offline = false; };
+                            if (chan.Offline === true) { chan.Offline = false; };
 
                             writeFileSync(path.join(__dirname, "../Commands/Streaming/", "./channels.json"), JSON.stringify(channels, null, 2), function (err) {
                                 if (err) return;
@@ -78,7 +89,13 @@ async function streamCheck(delay) {
                 } else {
                     try {
                         //Chan is offline, mark it as so.
-                        if (chan.Offline = true) { chan.Offline = true; };
+                        if (chan.Offline === false) {
+                            let checkMsg = await streamChan.messages.fetch({ limit: 100 });
+                            let streamMsg = await checkMsg.get(chan.postMessage);
+                            setEmbedOffline(stream, chan)
+                            streamMsg.edit({ embed: offembed })
+                            chan.Offline = true;
+                        };
                         chan.postMessage = "";
                         writeFileSync(path.join(__dirname, "../Commands/Streaming/", "./channels.json"), JSON.stringify(channels, null, 2), function (err) {
                             if (err) return;
@@ -100,4 +117,4 @@ async function streamCheck(delay) {
 };
 
 //Check every 2 Minutes.
-streamCheck(120 * 1000)
+streamCheck(120 * 1000);
