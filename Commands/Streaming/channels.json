@@ -2,62 +2,64 @@
   "230187047674052619": {
     "sapphsky": {
       "ChannelName": "sapphsky",
-      "postMessage": "",
-      "LastPost": ""
+      "Offline": false,
+      "postMessage": ""
     },
     "emerich": {
       "ChannelName": "emerich",
-      "postMessage": "",
-      "LastPost": ""
+      "Offline": false,
+      "postMessage": ""
     },
     "thatskidding": {
       "ChannelName": "thatskidding",
-      "postMessage": "",
-      "LastPost": ""
+      "Offline": false,
+      "postMessage": ""
     },
     "meltyyeen": {
       "ChannelName": "meltyyeen",
-      "postMessage": "750130237450354728",
-      "LastPost": 1598915385424
+      "Offline": false,
+      "postMessage": ""
     },
     "time2gogo": {
       "ChannelName": "time2gogo",
-      "postMessage": "750136737711521874",
-      "LastPost": 1598916935296
+      "postMessage": "750518684681895967",
+      "LastPost": 1599007998385,
+      "Offline": false
     },
     "jerma985": {
       "ChannelName": "jerma985",
-      "postMessage": "",
-      "LastPost": ""
+      "Offline": false,
+      "postMessage": ""
     }
   },
   "417492657955405825": {
     "time2gogo": {
       "ChannelName": "time2gogo",
-      "postMessage": "750141241223544862",
-      "LastPost": 1598918008946
+      "postMessage": "750518685352984687",
+      "LastPost": 1599007998603,
+      "Offline": false
     }
   },
   "513574570179952650": {
     "meltyyeen": {
       "ChannelName": "meltyyeen",
-      "postMessage": "750141240544067596",
-      "LastPost": 1598918008913
+      "Offline": false,
+      "postMessage": ""
     },
     "tropicvibes": {
       "ChannelName": "tropicvibes",
-      "postMessage": "",
-      "LastPost": ""
+      "Offline": false,
+      "postMessage": ""
     },
     "sittingintheshade": {
       "ChannelName": "sittingintheshade",
-      "postMessage": "",
-      "LastPost": ""
+      "Offline": false,
+      "postMessage": ""
     },
     "somaro": {
       "ChannelName": "somaro",
-      "postMessage": "",
-      "LastPost": ""
+      "Offline": false,
+      "postMessage": ""
     }
   }
 }

@@ -26,7 +26,8 @@ module.exports = {
         channels[message.guild.id][addChan] = {
             ChannelName: "",
             postMessage: "",
-            LastPost: ""
+            LastPost: "",
+            Offline: true
         };
         channels[message.guild.id][addChan].ChannelName = addChan;
 
