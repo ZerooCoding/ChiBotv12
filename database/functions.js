@@ -38,7 +38,11 @@ module.exports = bot => {
     };
 
     bot.Timestamp = date => {
-        return moment(date).format("MMMM Do YYYY, h:mm a");
+        return moment(date).format("MMMM Do YYYY, h:mm A");
+    };
+
+    bot.Time = date => {
+        return moment(date).format("h:mm A");
     };
 
 };

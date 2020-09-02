@@ -33,8 +33,9 @@ bot.on('message', async message => {
     const sentence = message.content.split(/ +/g);
 
     for (let i = 0; i < profanity.length; i++) {
-        if (RegExp(profanity[i]).test(sentence) == true) {
-            badWord = sentence;
+        let result = RegExp(profanity[i]).exec(message.cleanContent);
+        if (result !== null) {
+            badWord = result[0];
             send = true;
         }
     }
@@ -46,15 +47,17 @@ bot.on('message', async message => {
             .setThumbnail(message.author.avatarURL({ dynamic: true }))
             .setColor(settings.color)
             .setDescription(`
-            **${message.member.displayName} Said ›** ${badWord.join(" ")}
+            **${message.member.displayName} Said ›** ${badWord}
             **In Channel ›** ${message.channel.name}
             ** At Time ›** ${moment(Date.now()).format("MMMM Do YYYY, h:mm a")}
             `)
 
-        message.delete();
+        await message.delete();
+
+        message.channel.send(`${message.member.displayName} Today at ${bot.Time(message.createdTimestamp)}\n${message.content.replace(badWord, "[REDACTED]")}`)
 
         if (!settings.shouldLog) return;
 
-        auditLogChannel.send({ embed: ProfaneEmbed });
+        await auditLogChannel.send({ embed: ProfaneEmbed });
     }
 })
