@@ -78,7 +78,7 @@ async function streamCheck(delay) {
                 } else {
                     try {
                         //Chan is offline, mark it as so.
-                        if (chan.Offline = false) { chan.Offline = true; };
+                        if (chan.Offline = true) { chan.Offline = true; };
                         chan.postMessage = "";
                         writeFileSync(path.join(__dirname, "../Commands/Streaming/", "./channels.json"), JSON.stringify(channels, null, 2), function (err) {
                             if (err) return;

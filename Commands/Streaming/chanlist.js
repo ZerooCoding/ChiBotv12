@@ -20,7 +20,7 @@ module.exports = {
             .setTitle(`__**${member.guild.name}'s Watched Channels**__`);
 
         Object.entries(getChans).forEach(([k, chan]) => {
-            watchList.addField(`${chan.ChannelName}`, `Last Post› ${chan.LastPost ? bot.Timestamp(chan.LastPost) : "Hasn't been live yet."}`);
+            watchList.addField(`${chan.ChannelName}`, `Last Post› ${chan.LastPost ? bot.Timestamp(chan.LastPost) : "Hasn't been live yet."}\nStatus› ${chan.Offline === true ? "Offline" : `[Live on Twitch](https://www.twitch.tv/${chan.ChannelName})`}`);
         });
 
         message.channel.send({ embed: watchList })
