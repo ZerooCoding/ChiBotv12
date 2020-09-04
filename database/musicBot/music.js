@@ -55,7 +55,7 @@ module.exports = {
         dispatcher.setVolumeLogarithmic(queue.volume / 100);
 
         try {
-            var playingMessage = await queue.textChannel.send(`🎶 Started playing: **${song.title}**\n${song.url}`).then(s => s.delete({ timeout: 30 * 1000 }));
+            var playingMessage = await queue.textChannel.send(`🎶 Started playing: **${song.title}**\n${song.url}`);
             await playingMessage.react("⏭");
             await playingMessage.react("⏯");
             await playingMessage.react("🔁");
@@ -127,7 +127,9 @@ module.exports = {
         collector.on("end", () => {
             playingMessage.reactions.removeAll().catch(console.error);
             if (!playingMessage.deleted) {
-                playingMessage.then(s => s.delete({ timeout: 30 * 1000 }));
+                if (playingMessage) {
+                    playingMessage.then(s => s.delete({ timeout: 30 * 1000 }));
+                }
             }
         });
     }

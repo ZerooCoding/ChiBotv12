@@ -17,5 +17,6 @@ module.exports = {
         roleAssignChannel: "Not Set, Please mention Channel or set Channel ID",
         streamNotifChannel: "Not Set, Please mention Channel or set Channel ID",
         pinboardChannel: "Not Set, Please mention Channel or set Channel ID",
+        lastPurge: []
     }
 };

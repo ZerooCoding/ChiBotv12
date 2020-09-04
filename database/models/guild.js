@@ -68,6 +68,10 @@ const guildSchema = mongoose.Schema({
     pinboardChannel: {
         type: String,
         default: defaults.pinboardChannel
+    },
+    lastPurge: {
+        type: Array,
+        default: []
     }
 });
 

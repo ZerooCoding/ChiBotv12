@@ -81,11 +81,11 @@ module.exports = {
 
         //Update embed with information
         if (!wasMatched) {
-            embed.setDescription(`**Role Assigned**\nAssigned \`${gRole.name}\``).then(s => s.delete({ timeout: 60 * 1000 }));
+            embed.setDescription(`**Role Assigned**\nAssigned \`${gRole.name}\``);
         }
 
         //Assign Role
         await member.roles.add(gRole.id);
-        await message.channel.send({ embed: embed });
+        await message.channel.send({ embed: embed }).then(s => s.delete({ timeout: 60 * 1000 }));
     }
 }

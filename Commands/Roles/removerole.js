@@ -78,7 +78,7 @@ module.exports = {
 
         //Update embed with information
         if (!wasMatched) {
-            embed.setDescription(`**Role unAssigned**\nunAssigned \`${gRole.name}\``).then(s => s.delete({ timeout: 60 * 1000 }));
+            embed.setDescription(`**Role unAssigned**\nunAssigned \`${gRole.name}\``);
         }
 
         //Assign Role

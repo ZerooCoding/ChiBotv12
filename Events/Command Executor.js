@@ -1,6 +1,5 @@
 const { bot } = require("../CleanChiBot");
 const ms = require("ms");
-const { DefaultPrefix } = require("../DataStore/Config/Config.json");
 const { Collection } = require("discord.js");
 
 bot.on('message', async message => {
@@ -22,7 +21,7 @@ bot.on('message', async message => {
     //Command loader
     let command = bot.commands.get(cmd);
     if (!command) command = bot.commands.get(bot.aliases.get(cmd));
-    if (!command) return;
+    if (!command) return message.delete({ timeout: 30 * 1000 });
 
     //Cooldown Manager
     if (!bot.cooldowns.has(command.name)) { bot.cooldowns.set(command.name, new Collection()); }

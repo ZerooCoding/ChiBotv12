@@ -26,6 +26,8 @@ bot.on("messageDelete", async message => {
         }
     }
 
+    //Was the author / deleted message by the bot?
+    if (user === bot.user.tag) return;
 
     //Set up Embed
     const embed = new MessageEmbed()
