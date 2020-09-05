@@ -4,8 +4,8 @@ require("moment-duration-format");
 
 function BotUpTime() {
     setTimeout(() => {
-        const upTime = moment.duration(bot.uptime).format("Y [Y], M [M], W [W], D [D], H [h], m [m], s [s]");
-        bot.user.setActivity(`Uptime: ${upTime}`)
+        bot.ActiveFor = moment.duration(bot.uptime).format("Y [Y], M [M], W [W], D [D], H [h], m [m], s [s]");
+        bot.user.setActivity(`Uptime: ${bot.ActiveFor}`)
         BotUpTime()
     }, 10 * 1000);
 }

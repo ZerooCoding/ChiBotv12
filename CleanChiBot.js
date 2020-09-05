@@ -47,6 +47,7 @@ bot.once("ready", () => {
         table.addRow(`${f.name}`, '✔ -> Connected');
     });
     console.log(table.toString());
+    bot.StartedAt = Date.now();
 });
 
 bot.mongoose.init();

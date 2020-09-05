@@ -3,6 +3,8 @@ const moment = require("moment");
 const { Guild } = require("./models");
 
 module.exports = bot => {
+
+    //Database Functions
     bot.getGuild = async (guild) => {
         let data = await Guild.findOne({ guildID: guild.id });
         if (data) return data;
@@ -29,6 +31,7 @@ module.exports = bot => {
         return newGuild.save().then(console.log(`Default settings saved for guild "${merged.guildName}" (${merged.guildID})`));
     };
 
+    //Bot Util Functions
     bot.clean = text => {
         if (typeof (text) === "string") {
             return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
@@ -44,5 +47,4 @@ module.exports = bot => {
     bot.Time = date => {
         return moment(date).format("h:mm A");
     };
-
 };
