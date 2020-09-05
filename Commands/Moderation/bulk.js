@@ -36,17 +36,11 @@ module.exports = {
 
             //Send the purge as a txt file.
             let sortedMessages = messages.filter(t => t !== undefined).sort((a, b) => a.createdTimestamp - b.createdTimestamp);
-            sortedMessages.map(async m => { logMsgs.push(`${escapeMarkdown(`[${bot.Time(m.createdTimestamp)}] - ${m.member.displayName}: ${m.cleanContent}`)}`) });
+            sortedMessages.map(async m => { logMsgs.push(`${escapeMarkdown(`[${bot.Time(m.createdTimestamp)}] - ${m.member.displayName}: ${m.cleanContent ? m.cleanContent : m.embeds[0].description}`)}`) });
 
             settings.lastPurge.push(logMsgs.join("\n"));
             settings.lastPurge.shift();
             await settings.save();
-
-            // //Check for Logs
-            // if (settings.shouldLog === true && settings.auditLogChannel) {
-            //     const auditChan = message.guild.channels.cache.get(settings.auditLogChannel);
-            //     auditChan.send(`**Purge Executed**\n${settings.lastPurge.join("\n")}`, { split: true });
-            // }
 
             if (settings.shouldLog === true && settings.auditLogChannel) {
                 const auditChan = message.guild.channels.cache.get(settings.auditLogChannel);

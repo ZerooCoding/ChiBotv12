@@ -59,9 +59,9 @@ bot.on('message', async message => {
         const usermissing = message.channel.permissionsFor(message.author).missing(command.userPerms)
         if (usermissing.length > 0) {
             if (usermissing.length === 1) {
-                return message.reply(`\nSorry, The command \`${command.name}\` requires the permission "\`${permissions[usermissing[0]]}\`".`)
+                return message.reply(`\nSorry, The command \`${command.name}\` requires the permission "\`${permissions[usermissing[0]]}\`".`).then(s => s.delete({ timeout: 30 * 1000 }));
             }
-            return message.reply(`\nSorry, The command \`${command.name}\` requires the following permissions:\n\`${usermissing.map(perm => permissions[perm]).join(", ")}\``)
+            return message.reply(`\nSorry, The command \`${command.name}\` requires the following permissions:\n\`${usermissing.map(perm => permissions[perm]).join(", ")}\``).then(s => s.delete({ timeout: 30 * 1000 }));
         }
     }
 
@@ -70,9 +70,9 @@ bot.on('message', async message => {
         const botmissing = message.channel.permissionsFor(message.guild.me).missing(command.botPerms)
         if (botmissing.length > 0) {
             if (botmissing.length === 1) {
-                return message.reply(`\nI cannot execute the command \`${command.name}\`, I'm missing the the permission: "\`${permissions[botmissing[0]]}\`".`)
+                return message.reply(`\nI cannot execute the command \`${command.name}\`, I'm missing the the permission: "\`${permissions[botmissing[0]]}\`".`).then(s => s.delete({ timeout: 30 * 1000 }));
             }
-            return message.reply(`\nI cannot execute the command \`${command.name}\`, I'm missing the the following permissions:\n\`${botmissing.map(perm => permissions[perm]).join(", ")}\``)
+            return message.reply(`\nI cannot execute the command \`${command.name}\`, I'm missing the the following permissions:\n\`${botmissing.map(perm => permissions[perm]).join(", ")}\``).then(s => s.delete({ timeout: 30 * 1000 }));
         }
     }
 
@@ -84,10 +84,8 @@ bot.on('message', async message => {
     //Run Command
     try {
         if (command) {
-            if (message.guild.me.hasPermission("MANAGE_MESSAGES")) {
-                if (message) {
-                    message.delete({ timeout: 60 * 1000 }).catch(err => console.error(err));
-                }
+            if (message) {
+                message.delete({ timeout: 60 * 1000 }).catch(err => console.error(err));
             }
             command.execute(bot, message, args, settings);
         }
