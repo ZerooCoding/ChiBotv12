@@ -55,9 +55,10 @@ bot.on('message', async message => {
     }
 
     //Check for permissions of user
-    if (command.userPerms.length > 0) {
+    if (command.userPerms) {
         const usermissing = message.channel.permissionsFor(message.author).missing(command.userPerms)
         if (usermissing.length > 0) {
+            message.delete({ timeout: 30 * 1000 });
             if (usermissing.length === 1) {
                 return message.reply(`\nSorry, The command \`${command.name}\` requires the permission "\`${permissions[usermissing[0]]}\`".`).then(s => s.delete({ timeout: 30 * 1000 }));
             }
@@ -66,9 +67,10 @@ bot.on('message', async message => {
     }
 
     //Check for bot permissions
-    if (command.botPerms.length > 0) {
+    if (command.botPerms) {
         const botmissing = message.channel.permissionsFor(message.guild.me).missing(command.botPerms)
         if (botmissing.length > 0) {
+            message.delete({ timeout: 30 * 1000 });
             if (botmissing.length === 1) {
                 return message.reply(`\nI cannot execute the command \`${command.name}\`, I'm missing the the permission: "\`${permissions[botmissing[0]]}\`".`).then(s => s.delete({ timeout: 30 * 1000 }));
             }
