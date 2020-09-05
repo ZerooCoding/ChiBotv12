@@ -1,4 +1,5 @@
 const { bot } = require("../CleanChiBot");
+const { permissions } = require("../DataStore/util/util");
 const ms = require("ms");
 const { Collection } = require("discord.js");
 
@@ -54,13 +55,25 @@ bot.on('message', async message => {
     }
 
     //Check for permissions of user
-    if (!message.member.hasPermission(command.userPerms)) {
-        return message.reply(`\nSorry, You don't have the required permission(s) \`${command.userPerms.join(" ")}\` to use \`${command.name}\`.`);
+    if (command.userPerms.length > 0) {
+        const usermissing = message.channel.permissionsFor(message.author).missing(command.userPerms)
+        if (usermissing.length > 0) {
+            if (usermissing.length === 1) {
+                return message.reply(`\nSorry, The command \`${command.name}\` requires the permission "\`${permissions[usermissing[0]]}\`".`)
+            }
+            return message.reply(`\nSorry, The command \`${command.name}\` requires the following permissions:\n\`${usermissing.map(perm => permissions[perm]).join(", ")}\``)
+        }
     }
 
     //Check for bot permissions
-    if (!message.guild.me.hasPermission(command.botPerms)) {
-        return message.reply(`\nI cannot execute this command, I'm missing the following permissions:\n\`${command.botPerms.join("\n")}\``);
+    if (command.botPerms.length > 0) {
+        const botmissing = message.channel.permissionsFor(message.guild.me).missing(command.botPerms)
+        if (botmissing.length > 0) {
+            if (botmissing.length === 1) {
+                return message.reply(`\nI cannot execute the command \`${command.name}\`, I'm missing the the permission: "\`${permissions[botmissing[0]]}\`".`)
+            }
+            return message.reply(`\nI cannot execute the command \`${command.name}\`, I'm missing the the following permissions:\n\`${botmissing.map(perm => permissions[perm]).join(", ")}\``)
+        }
     }
 
     //Check if channel is nsfw

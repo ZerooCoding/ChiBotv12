@@ -72,50 +72,64 @@ module.exports = {
         collector.on("collect", (reaction, user) => {
             if (!queue) return;
             const member = message.guild.member(user);
+            const chan = queue.channel;
+            let requiredVote = Math.round(chan.members.size / 2);
 
             switch (reaction.emoji.name) {
                 case "⏭":
-                    queue.playing = true;
-                    reaction.users.remove(user).catch(console.error);
+                    queue.textChannel.send(`${user} 📫 voted to skip the song. \`${reaction.count - 1}/${requiredVote}\`votes.`).then(s => s.delete({ timeout: 10 * 1000 }));
+                    if (reaction.count - 1 >= requiredVote) {
+                        reaction.users.cache.filter(u => { if (!u.bot) return u }).forEach(r => { reaction.users.remove(r); });
+                        queue.playing = true;
 
-                    queue.connection.dispatcher.end();
-                    queue.textChannel.send(`${user} ⏩ skipped the song`).then(s => s.delete({ timeout: 30 * 1000 }));
-                    collector.stop();
+                        queue.connection.dispatcher.end();
+                        queue.textChannel.send(`✅ Vote Passed | ⏩ skipped the song`).then(s => s.delete({ timeout: 10 * 1000 }));
+                        collector.stop();
+                    }
                     break;
 
                 case "⏯":
-                    reaction.users.remove(user).catch(console.error);
+                    queue.textChannel.send(`${user} 📫 voted to pause/resume the music. \`${reaction.count - 1}/${requiredVote}\`votes.`).then(s => s.delete({ timeout: 10 * 1000 }));
+                    if (reaction.count - 1 >= requiredVote) {
+                        reaction.users.cache.filter(u => { if (!u.bot) return u }).forEach(r => { reaction.users.remove(r); });
 
-                    if (queue.playing) {
-                        queue.playing = !queue.playing;
-                        queue.connection.dispatcher.pause(true);
-                        queue.textChannel.send(`${user} ⏸ paused the music.`).then(s => s.delete({ timeout: 30 * 1000 }));
-                    } else {
-                        queue.playing = !queue.playing;
-                        queue.connection.dispatcher.resume();
-                        queue.textChannel.send(`${user} ▶ resumed the music!`).then(s => s.delete({ timeout: 30 * 1000 }));
+                        if (queue.playing) {
+                            queue.playing = !queue.playing;
+                            queue.connection.dispatcher.pause(true);
+                            queue.textChannel.send(`✅ Vote Passed | ⏸ paused the music.`).then(s => s.delete({ timeout: 10 * 1000 }));
+                        } else {
+                            queue.playing = !queue.playing;
+                            queue.connection.dispatcher.resume();
+                            queue.textChannel.send(`✅ Vote Passed | ▶ resumed the music!`).then(s => s.delete({ timeout: 10 * 1000 }));
+                        }
                     }
                     break;
 
                 case "🔁":
-                    reaction.users.remove(user).catch(console.error);
+                    queue.textChannel.send(`${user} 📫 voted to enable/disable loop. \`${reaction.count - 1}/${requiredVote}\`votes.`).then(s => s.delete({ timeout: 10 * 1000 }));
+                    if (reaction.count - 1 >= requiredVote) {
+                        reaction.users.cache.filter(u => { if (!u.bot) return u }).forEach(r => { reaction.users.remove(r); });
 
-                    queue.loop = !queue.loop;
-                    queue.textChannel.send(`Loop is now ${queue.loop ? "**on**" : "**off**"}`).then(s => s.delete({ timeout: 30 * 1000 }));
+                        queue.loop = !queue.loop;
+                        queue.textChannel.send(`✅ Vote Passed | 🔁 Loop is now ${queue.loop ? "**on**" : "**off**"}`).then(s => s.delete({ timeout: 10 * 1000 }));
+                    }
                     break;
 
                 case "⏹":
-                    reaction.users.remove(user).catch(console.error);
+                    queue.textChannel.send(`${user} 📫 voted to stop the music. \`${reaction.count - 1}/${requiredVote}\`votes.`).then(s => s.delete({ timeout: 10 * 1000 }));
+                    if (reaction.count - 1 >= requiredVote) {
+                        reaction.users.cache.filter(u => { if (!u.bot) return u }).forEach(r => { reaction.users.remove(r); });
 
-                    queue.songs = [];
-                    queue.textChannel.send(`${user} ⏹ stopped the music!`).then(s => s.delete({ timeout: 30 * 1000 }));
-                    try {
-                        queue.connection.dispatcher.end();
-                    } catch (error) {
-                        console.error(error);
-                        queue.connection.disconnect();
+                        queue.songs = [];
+                        queue.textChannel.send(`✅ Vote Passed | ⏹ stopped the music!`).then(s => s.delete({ timeout: 10 * 1000 }));
+                        try {
+                            queue.connection.dispatcher.end();
+                        } catch (error) {
+                            console.error(error);
+                            queue.connection.disconnect();
+                        }
+                        collector.stop();
                     }
-                    collector.stop();
                     break;
 
                 default:
@@ -128,7 +142,7 @@ module.exports = {
             playingMessage.reactions.removeAll().catch(console.error);
             if (!playingMessage.deleted) {
                 if (playingMessage) {
-                    playingMessage.then(s => s.delete({ timeout: 30 * 1000 }));
+                    playingMessage.delete({ timeout: 30 * 1000 }).catch(console.error);
                 }
             }
         });
