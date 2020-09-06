@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
-const { Guild } = require("./models");
+const { Guild } = require("../Database Models");
 
 module.exports = bot => {
 

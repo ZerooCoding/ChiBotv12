@@ -1,5 +1,5 @@
 const { bot } = require("../CleanChiBot");
-const { permissions } = require("../DataStore/util/util");
+const { permissions } = require("../DataStore/Functions/util");
 const ms = require("ms");
 const { Collection } = require("discord.js");
 

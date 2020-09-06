@@ -2,7 +2,7 @@ const config = require("../../DataStore/Config/Config.json");
 const ytdl = require('ytdl-core');
 const YoutubeAPI = require("simple-youtube-api");
 const youtube = new YoutubeAPI(config.YoutubeAPI);
-const { play } = require("../../database/musicBot/music");
+const { play } = require("../../DataStore/Functions/music");
 
 module.exports = {
     name: "play",

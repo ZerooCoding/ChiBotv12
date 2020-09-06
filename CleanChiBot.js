@@ -19,9 +19,9 @@ bot.cooldowns = new Discord.Collection();
 bot.queue = new Map();
 
 //Database
-bot.mongoose = require("./database/mongoose");
-bot.defaults = require("./database/databaseDefaults");
-require("./database/functions")(bot)
+bot.mongoose = require("./DataStore/Functions/mongoose");
+bot.defaults = require("./DataStore/Database Models/databaseDefaults");
+require("./DataStore/Functions/functions")(bot)
 
 //Declare myself as Owner of bot.
 bot.Owner = "101789503634554880";

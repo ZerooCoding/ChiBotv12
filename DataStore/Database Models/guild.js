@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { defaultSettings: defaults } = require("../databaseDefaults");
+const { defaultSettings: defaults } = require("./databaseDefaults");
 
 const guildSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,

@@ -2,7 +2,7 @@ const Discord = module.require("discord.js");
 const config = require("../../DataStore/Config/Config.json");
 const YoutubeAPI = require("simple-youtube-api");
 const youtube = new YoutubeAPI(config.YoutubeAPI);
-const { play } = require("../../database/musicBot/music");
+const { play } = require("../../DataStore/Functions/music");
 
 
 module.exports = {
