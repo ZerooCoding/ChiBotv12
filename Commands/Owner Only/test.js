@@ -13,24 +13,11 @@ module.exports = {
     botPerms: [],
     async execute(bot, message, args, settings) {
 
-        let msg = await message.channel.send("Test!");
+        let channel = message.content.split("twitch.tv/")
 
-        await msg.react("⏹");
-
-        const filter = (reaction, user) => user.id !== bot.user.id;
-        var collector = msg.createReactionCollector(filter, {
-            time: 300 * 1000
-        });
-
-        collector.on("collect", (reaction, user) => {
-            switch (reaction.emoji.name) {
-                case "⏹":
-                    if (reaction.count - 1 >= 2) {
-                        reaction.users.cache.filter(u => { if (!u.bot) return u }).forEach(r => { reaction.users.remove(r); })
-                    }
-                    break;
-            }
-        })
-
+        if (!channel[1]) {
+            channel = args[0]
+        }
+        console.log(channel);
     }
 }

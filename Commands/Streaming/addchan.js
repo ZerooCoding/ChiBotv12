@@ -6,13 +6,19 @@ module.exports = {
     aliases: [],
     description: "Add a Twitch channel to the Watch list.\n(Requires streamNotifChannel to be Set)",
     category: "Streaming",
-    usage: "<TwitchChannelName>",
+    usage: "<TwitchChannelName> or <Twitch URL>",
     ownerOnly: false,
     async execute(bot, message, args, settings) {
         //Declarations
         const channels = JSON.parse(readFileSync(path.join(__dirname, "./channels.json"), "utf8"));
-        const addChan = args.join(" ").toLowerCase();
+        let addChan = message.content.split("twitch.tv/")
         let setChans = [];
+
+        if (addChan[1]) {
+            addChan = addChan[1]
+        } else {
+            addChan = args[0];
+        }
 
         //Checks
         if (!addChan) message.reply(`\nPlease provide a channel name to add.`).then(s => s.delete({ timeout: 30 * 1000 }));

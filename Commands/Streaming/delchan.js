@@ -6,16 +6,22 @@ module.exports = {
     aliases: [],
     description: "Remove a Twitch channel to the Watch list.",
     category: "Streaming",
-    usage: "<TwitchChannelName>",
+    usage: "<TwitchChannelName> or <Twitch URL>",
     ownerOnly: false,
     async execute(bot, message, args, settings) {
         //Declarations
         const channels = JSON.parse(readFileSync(path.join(__dirname, "./channels.json"), "utf8"));
-        const delChan = args.join(" ").toLowerCase();
+        let delChan = message.content.split("twitch.tv/")
         let setChans = [];
 
+        if (delChan[1]) {
+            delChan = delChan[1]
+        } else {
+            delChan = args[0];
+        }
+
         //Checks
-        if (!delChan) message.reply(`\nPlease provide a channel name to remove.`).then(s => s.delete({ timeout: 30 * 1000 }));
+        if (!delChan) message.reply(`\nPlease provide a channel name to add.`).then(s => s.delete({ timeout: 30 * 1000 }));
 
         //Setup "Database"
         if (!channels[message.guild.id]) { channels[message.guild.id] = {}; }
