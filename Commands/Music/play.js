@@ -3,6 +3,7 @@ const ytdl = require('ytdl-core');
 const YoutubeAPI = require("simple-youtube-api");
 const youtube = new YoutubeAPI(config.YoutubeAPI);
 const { play } = require("../../DataStore/Functions/music");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     name: "play",
@@ -22,7 +23,7 @@ module.exports = {
 
         if (!args.length)
             return message
-                .reply(`Usage: ${guildConf.prefix}play <YouTube URL | Video Name>`)
+                .reply(`Usage: ${settings.prefix}play <YouTube URL | Video Name>`)
                 .catch(console.error);
 
         const search = args.join(" ");
@@ -46,10 +47,13 @@ module.exports = {
         if (urlValid) {
             try {
                 songInfo = await ytdl.getInfo(url);
+                console.log(songInfo.videoDetails.thumbnail.thumbnails[`${songInfo.videoDetails.thumbnail.thumbnails.length - 1}`].url);
                 song = {
                     title: songInfo.videoDetails.title,
+                    thumbnail: await songInfo.videoDetails.thumbnail.thumbnails[`${songInfo.videoDetails.thumbnail.thumbnails.length - 1}`].url,
                     url: songInfo.videoDetails.video_url,
-                    duration: songInfo.videoDetails.lengthSeconds
+                    duration: await songInfo.videoDetails.lengthSeconds,
+                    addedby: message.member
                 };
             } catch (error) {
                 console.error(error);
@@ -61,8 +65,10 @@ module.exports = {
                 songInfo = await ytdl.getInfo(results[0].url);
                 song = {
                     title: songInfo.videoDetails.title,
+                    thumbnail: await songInfo.videoDetails.thumbnail.thumbnails[`${songInfo.videoDetails.thumbnail.thumbnails.length - 1}`].url,
                     url: songInfo.videoDetails.video_url,
-                    duration: songInfo.videoDetails.lengthSeconds
+                    duration: await songInfo.videoDetails.lengthSeconds,
+                    addedby: message.member
                 };
             } catch (error) {
                 console.error(error);
@@ -71,9 +77,21 @@ module.exports = {
         }
 
         if (serverQueue) {
+
+            const queuedEmbed = new MessageEmbed()
+                .setAuthor(song.addedby.displayName, song.addedby.user.displayAvatarURL({ dynamic: true }))
+                .setTitle(`${song.title}`)
+                .setURL(song.url)
+                .setThumbnail(song.thumbnail)
+                .setColor(settings.color)
+                .addField("Channel", `${message.channel.name}`, true)
+                //.addField("Position in Queue", `${serverQueue.songs.indexOf(song.title) + 1}`)
+                .addField("Song Duration", `${bot.msToTime(song.duration * 1000)}`, true)
+
             serverQueue.songs.push(song);
             return serverQueue.textChannel
-                .send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
+                .send({ embed: queuedEmbed })
+                //.send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
                 .then(s => s.delete({ timeout: 30 * 1000 }))
                 .catch(console.error);
         }

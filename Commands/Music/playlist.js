@@ -4,7 +4,6 @@ const YoutubeAPI = require("simple-youtube-api");
 const youtube = new YoutubeAPI(config.YoutubeAPI);
 const { play } = require("../../DataStore/Functions/music");
 
-
 module.exports = {
     name: "playlist",
     aliases: ["pl"],
@@ -70,11 +69,12 @@ module.exports = {
             }
         }
 
-        videos.forEach((video) => {
+        videos.forEach(async (video) => {
             song = {
                 title: video.title,
                 url: video.url,
-                duration: video.durationSeconds
+                duration: await video.durationSeconds,
+                addedby: message.member
             };
 
             if (serverQueue) {

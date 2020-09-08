@@ -10,7 +10,7 @@ module.exports = {
     hidden: false,
     nsfw: false,
     userPerms: ["MANAGE_ROLES"],
-    botPerms: [],
+    botPerms: ["MANAGE_ROLES"],
     async execute(bot, message, args, settings) {
         //Basic Checks
         if (isNaN(settings.roleAssignChannel)) return message.reply(`\nSorry, This command connot be used without a \`roleAssignChannel\` set up.`);
@@ -32,8 +32,9 @@ module.exports = {
             .map(r => {
                 if (
                     !r.permissions.any(ignoredRoles) &&
-                    r.permissions.has("SEND_MESSAGES") &&
+                    !r.managed &&
                     r.id !== message.guild.id &&
+                    !r.name.includes("Muted") &&
                     !r.name.includes("Trusted") &&
                     !r.name.includes("Nitro")
                 )

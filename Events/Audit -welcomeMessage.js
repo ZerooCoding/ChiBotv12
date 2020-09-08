@@ -15,6 +15,7 @@ bot.on("guildMemberAdd", async member => {
     //Setup embed
     const embed = new MessageEmbed()
         .setAuthor(member.displayName, member.user.displayAvatarURL({ dynamic: true }))
+        .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
         .setColor(settings.color)
         .setFooter(`At› ${bot.Timestamp(new Date())}`);
 
@@ -24,7 +25,7 @@ bot.on("guildMemberAdd", async member => {
             //Replace options
             let replaced = await msg
                 .replace("{server}", `**${member.guild.name}**`)
-                .replace("{user}", `<@${member.id}>`)
+                .replace("{user}", `${member}`)
                 .replace("{channel}", `<#${settings.rulesChannel}>`)
                 .replace("{nl}", `\n`)
                 .toString();

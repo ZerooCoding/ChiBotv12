@@ -1,10 +1,12 @@
 const { bot } = require("../../CleanChiBot");
 const ytdlDiscord = require("ytdl-core-discord");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     async play(song, message) {
-        const queue = bot.queue.get(message.guild.id);
-
+        const settings = await bot.getGuild(message.guild);
+        const queue = await bot.queue.get(message.guild.id);
+        //If no song in queue, delete it and leave.
         if (!song) {
             queue.channel.leave();
             bot.queue.delete(message.guild.id);
@@ -13,6 +15,7 @@ module.exports = {
 
         let stream = null;
 
+        //Get song from url and push to queue
         try {
             if (song.url.includes("youtube.com")) {
                 stream = await ytdlDiscord(song.url, { highWaterMark: 1 << 25 });
@@ -22,7 +25,6 @@ module.exports = {
                 queue.songs.shift();
                 module.exports.play(queue.songs[0], message);
             }
-
             console.error(error);
             return message.channel.send(`Error: ${error.message ? error.message : error}`).then(s => s.delete({ timeout: 30 * 1000 }));
         }
@@ -54,8 +56,18 @@ module.exports = {
             });
         dispatcher.setVolumeLogarithmic(queue.volume / 100);
 
+        //Song is now playing, add controls
         try {
-            var playingMessage = await queue.textChannel.send(`🎶 Started playing: **${song.title}**\n${song.url}`);
+            const playingEmbed = new MessageEmbed()
+                .setAuthor(song.addedby.displayName, song.addedby.user.displayAvatarURL({ dynamic: true }))
+                .setTitle(`${song.title}`)
+                .setURL(song.url)
+                .setThumbnail(song.thumbnail)
+                .setColor(settings.color)
+                .addField("Song Duration", `${bot.msToTime(song.duration * 1000)}`)
+
+            //var playingMessage = await queue.textChannel.send(`🎶 Started playing: **${song.title}**\n${song.url}`);
+            var playingMessage = await queue.textChannel.send("🎶**Now Playing›**", { embed: playingEmbed });
             await playingMessage.react("⏭");
             await playingMessage.react("⏯");
             await playingMessage.react("🔁");
@@ -137,7 +149,7 @@ module.exports = {
                     break;
             }
         });
-
+        //Song ended
         collector.on("end", () => {
             playingMessage.reactions.removeAll().catch(console.error);
             if (!playingMessage.deleted) {

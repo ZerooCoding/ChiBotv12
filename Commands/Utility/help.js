@@ -42,7 +42,7 @@ module.exports = {
             //Add Description
             helpEmbed
                 .setTitle(`__**${bot.user.username} Commands**__`)
-                .setDescription(`Command prefix is: ${settings.prefix}\nTo view more information on a command, use \`${settings.prefix}help <command>\`\n😳 Represents an NSFW Command.\n🔒 Represents a Locked Command.\n`)
+                .setDescription(`Command prefix is: ${settings.prefix}\nTo view more information on a command, use \`${settings.prefix}help <command>\`\n🔞 Represents an NSFW Command.\n🔒 Represents a Locked Command.\n`)
                 .setFooter(`Total Commands› ${bot.commands.size}`);
 
             //Add commands to Embed
@@ -54,7 +54,7 @@ module.exports = {
                 });
                 const capitalize = Cat.slice(0, 1).toUpperCase() + Cat.slice(1);
                 try {
-                    helpEmbed.addField(`${capitalize} [${dir.size}] ›`, dir.map(command => `**${command.name}**${command.nsfw ? "😳" : ""}${command.ownerOnly ? "🔒" : ""} › ${command.description ? command.description : ""}`).join("\n"));
+                    helpEmbed.addField(`${capitalize} [${dir.size}] ›`, dir.map(command => `**${command.name}**${command.nsfw ? "🔞" : ""}${command.ownerOnly ? "🔒" : ""} › ${command.description ? command.description : ""}`).join("\n"));
                 } catch (e) {
                     console.log(e);
                 }
