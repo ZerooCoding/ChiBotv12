@@ -4,6 +4,7 @@ module.exports = {
         prefix: "!",
         color: "#f1bdff",
         welcomeMessage: "Welcome to {server} {user}!{nl}Please head over to {channel} to get started!",
+        allowUserInvites: false,
         shouldLog: false,
         shouldWelcome: false,
         profanityFilter: false,

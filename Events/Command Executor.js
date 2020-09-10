@@ -51,7 +51,7 @@ bot.on('message', async message => {
 
     //Check if args are required
     if (command.args && !args.length) {
-        return message.reply(`\nPlease check the required arguments for the command \`${command.name}\`.`);
+        return message.reply(`\nThe command \`${command.name}\` requires arguments to function.\n**For example›** ${command.example ? `\`${settings.prefix}${command.name} ${command.example}\`` : `\`${settings.prefix}${command.name} ${command.usage}\``}`)
     }
 
     //Check for permissions of user

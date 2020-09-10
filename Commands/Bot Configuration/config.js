@@ -51,6 +51,17 @@ module.exports = {
             }
 
             //Start Booleans
+            //Allow Invites
+            case "allowUserInvites": {
+                if (!newSetting) return message.reply(`\nallowUserInvites: \`${settings.allowUserInvites}\``).then(s => s.delete({ timeout: 60 * 1000 }));
+                try {
+                    await bot.updateGuild(message.guild, { allowUserInvites: newSetting });
+                    message.reply(`\nSetting Updated: allowUserInvites:\`${newSetting}\``).then(s => s.delete({ timeout: 60 * 1000 }));
+                } catch (error) {
+                    message.reply(`\nAn error occurred: **${error.message}**`).then(s => s.delete({ timeout: 60 * 1000 }));
+                }
+                break;
+            }
             //shouldLog
             case "shouldLog": {
                 if (!newSetting) return message.reply(`\nshouldLog: \`${settings.shouldLog}\``).then(s => s.delete({ timeout: 60 * 1000 }));
@@ -241,6 +252,8 @@ module.exports = {
                     {user} = joined user.
                     {server} = server name.
                     {channel} = the guilds configured rules channel.*
+
+                    **allowUserInvites›** ${settings.allowUserInvites}
 
                     **shouldLog›** ${settings.shouldLog}
                     **shouldWelcome›** ${settings.shouldWelcome}

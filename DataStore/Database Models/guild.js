@@ -17,6 +17,10 @@ const guildSchema = mongoose.Schema({
         type: String,
         default: defaults.color
     },
+    allowUserInvites: {
+        type: Boolean,
+        default: defaults.allowUserInvites
+    },
     shouldLog: {
         type: Boolean,
         default: defaults.shouldLog

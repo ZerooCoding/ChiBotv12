@@ -3,13 +3,17 @@ module.exports = {
     description: "Create an instant invite.",
     category: "Utility",
     usage: "",
-    userPerms: ["CREATE_INSTANT_INVITE"],
     botPerms: ["CREATE_INSTANT_INVITE"],
     async execute(bot, message, args, settings) {
 
-        if (!settings.rulesChannel) return message.reply(`No rules channel set, Invites cannot be created.`);
+        //Check if users are allowed to create invites.
+        if (!settings.allowUserInvites) return message.reply(`\nThis server has disabled user created invitations.`).then(s => s.delete({ timeout: 30 * 1000 }));
 
-        message.guild.channels.cache.get(settings.rulesChannel).createInvite({
+        //Declarations
+        let invchan;
+        if (settings.rulesChannel) { invchan = await message.guild.channels.cache.get(settings.rulesChannel) } else { invchan = await message.channel; };
+
+        invchan.createInvite({
             temporary: true,
             maxAge: 600,
             maxUses: 1,
