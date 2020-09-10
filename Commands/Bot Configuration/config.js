@@ -5,11 +5,8 @@ module.exports = {
     description: "Changes Guild Configuration files for the Bot.",
     category: "Bot Configuration",
     usage: " | <setting> | <setting> <new setting>",
-    ownerOnly: false,
-    hidden: false,
-    nsfw: false,
+    example: "prefix %",
     userPerms: ["MANAGE_GUILD"],
-    botPerms: [],
     async execute(bot, message, args, settings) {
 
         const setting = args[0];
@@ -270,8 +267,9 @@ module.exports = {
                     **roleAssignChannel›** ${!isNaN(settings.roleAssignChannel) ? message.guild.channels.cache.get(settings.roleAssignChannel) : "Not Set, Please mention Channel or set Channel ID."}
                     **streamNotifChannel›** ${!isNaN(settings.streamNotifChannel) ? message.guild.channels.cache.get(settings.streamNotifChannel) : "Not Set, Please mention Channel or set Channel ID."}
                     **pinboardChannel›** ${!isNaN(settings.pinboardChannel) ? message.guild.channels.cache.get(settings.pinboardChannel) : "Not Set, Please mention Channel or set Channel ID."}
-                    `);
-                    message.channel.send({ embed: list }).then(s => s.delete({ timeout: 60 * 1000 }));
+                    `)
+                        .setFooter(`To update a setting - ${settings.prefix}config <option> <newoption>`);
+                    message.channel.send({ embed: list }).then(s => s.delete({ timeout: 600 * 1000 }));
                 } catch (error) {
                     console.error(error);
                 }
