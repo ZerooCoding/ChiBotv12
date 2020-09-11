@@ -4,6 +4,7 @@ const Sugar = require("sugar");
 
 module.exports = {
     name: "time",
+    aliases: [],
     description: "Check how long until a date.",
     example: "until December 25th",
     category: "Utility",
