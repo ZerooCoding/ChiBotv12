@@ -23,6 +23,7 @@
     "request": "^2.88.2",
     "simple-youtube-api": "^5.2.1",
     "string-similarity": "^4.0.2",
+    "sugar": "^2.0.6",
     "twitch": "^4.2.0-pre.6",
     "twitch-auth": "^4.2.0-pre.6",
     "ytdl-core": "^3.2.2",
