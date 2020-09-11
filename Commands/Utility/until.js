@@ -3,26 +3,43 @@ const moment = require("moment");
 const Sugar = require("sugar");
 
 module.exports = {
-    name: "until",
-    aliases: ["when"],
+    name: "time",
     description: "Check how long until a date.",
-    example: "December 25th",
+    example: "until December 25th",
     category: "Utility",
-    usage: "<date>",
+    usage: " until | since | when <date>",
     args: true,
     async execute(bot, message, args, settings) {
-
-        //Declarations
-        const humanDate = args.join(" ");
-        const convertedDate = Sugar.Date.create(humanDate);
-        const until = moment().to(convertedDate);
 
         //Setup Embed
         const embed = new MessageEmbed()
             .setAuthor(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
-            .setDescription(`${humanDate} is ${until}.`)
             .setColor(settings.color)
 
+        //Declarations
+        const humanDate = args.slice(1).join(" ");
+        const convertedDate = Sugar.Date.create(humanDate);
+        let finalConversion;
+
+        //Until
+        if (args[0] === "until") {
+            finalConversion = `**${args[0]}** | ${humanDate} is ${moment().to(convertedDate)}.`;
+            embed.setDescription(finalConversion);
+        }
+
+        //Since
+        if (args[0] === "since") {
+            finalConversion = `**${args[0]}** | ${humanDate} was ${moment().to(convertedDate)}.`;
+            embed.setDescription(finalConversion);
+        }
+
+        //When
+        if (args[0] === "when" | "what") {
+            finalConversion = `**${args[0]}** | ${humanDate} will be ${bot.Timestamp(convertedDate)}.`;
+            embed.setDescription(finalConversion);
+        }
+
+        //Send that data!
         message.channel.send({ embed: embed })
 
     }
