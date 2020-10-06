@@ -5,7 +5,7 @@ module.exports = {
     name: "uptime",
     aliases: ["up"],
     description: "Displays Bot Uptime",
-    category: "Utility",
+    category: "Other",
     async execute(bot, message, args, settings) {
 
         const embed = new MessageEmbed()

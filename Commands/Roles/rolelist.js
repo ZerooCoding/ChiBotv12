@@ -1,5 +1,6 @@
 const { MessageEmbed, escapeMarkdown } = require("discord.js");
-
+const path = require('path');
+const fs = require('fs');
 module.exports = {
     name: "rolelist",
     aliases: [],
@@ -15,6 +16,17 @@ module.exports = {
         //Basic Checks
         if (isNaN(settings.roleAssignChannel)) return message.reply(`\nSorry, This command connot be used without a \`roleAssignChannel\` set up.`);
         if (message.channel.id != settings.roleAssignChannel) return message.reply(`\nPlease use this command in <#${settings.roleAssignChannel}>.`);
+
+        //Get blacklist
+        let badList = [];
+        let Blacklist = JSON.parse(fs.readFileSync(path.join(__dirname, "../../DataStore/Blacklists/", "./roles.json"), "utf8"));
+        let thisGuild = Blacklist[message.guild.id];
+
+        if (thisGuild) {
+            Object.entries(thisGuild).forEach(([k, role]) => {
+                badList.push(role.roleID);
+            })
+        }
 
         //Assume staff roles are not assignable.
         const ignoredRoles = [
@@ -36,7 +48,8 @@ module.exports = {
                     r.id !== message.guild.id &&
                     !r.name.includes("Muted") &&
                     !r.name.includes("Trusted") &&
-                    !r.name.includes("Nitro")
+                    !r.name.includes("Nitro") &&
+                    !badList.includes(r.id)
                 )
                     return r.name;
             })
