@@ -10,6 +10,9 @@ lib.setup(bot);
 
 module.exports = { bot: bot };
 
+//Shitpost Toggle
+bot.ShitPost = false;
+
 //Command Info
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
