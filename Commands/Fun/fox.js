@@ -3,8 +3,11 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     name: "fox",
-    description: "Random Fox!",
+    aliases: [],
+    description: "Random Fox image!",
+    example: "",
     category: "Fun",
+    usage: "",
     async execute(bot, message, args, settings) {
 
         let fox;

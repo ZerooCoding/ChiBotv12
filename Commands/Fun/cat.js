@@ -3,8 +3,11 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     name: "cat",
-    description: "Random Cat!",
+    aliases: [],
+    description: "Random Cat image!",
+    example: "",
     category: "Fun",
+    usage: "",
     async execute(bot, message, args, settings) {
 
         let cat;
@@ -13,7 +16,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setImage(`${cat.file}`)
             .setColor(settings.color)
-            .setFooter(`A fox for ${message.author.username}!`);
+            .setFooter(`A cat for ${message.author.username}!`);
 
         message.channel.send({ embed: embed });
 
