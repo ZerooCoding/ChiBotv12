@@ -1,5 +1,4 @@
 const { MessageEmbed, escapeMarkdown } = require("discord.js");
-const ms = require("ms");
 
 module.exports = {
     name: "test",
@@ -13,8 +12,8 @@ module.exports = {
     userPerms: [],
     botPerms: [],
     async execute(bot, message, args, settings) {
-        
-        
+
+
 
     }
 }
