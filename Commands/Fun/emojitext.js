@@ -21,7 +21,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setColor(settings.color)
             .setAuthor(message.member.displayName, message.author.displayAvatarURL())
-            .setDescription(emoji(args.join(" ")))
+            .setDescription(emoji(args.join(" ").toLowerCase()))
         return message.channel.send({ embed: embed });
     }
 }

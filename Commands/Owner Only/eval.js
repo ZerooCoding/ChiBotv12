@@ -21,6 +21,10 @@ module.exports = {
         let hrDiff;
         hrDiff = process.hrtime(hrStart);
         const code = args.join(" ");
+        if (code.includes("token")) {
+            message.reply(`\nI will not share my token.`).then(s => s.delete({ timeout: 30 * 1000 }));
+            return;
+        }
         try {
             let evaled = eval(code);
             if (typeof evaled !== "string") {
